@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="sub"/>
+    <variable name="obj"/>
+    <variable name="pred"/>
+  </head>
+  <results ordered="false" distinct="false">
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/LabelProperty</uri>
+      </binding>
+      <binding name="obj">
+        <literal>unstable</literal>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2003/06/sw-vocab-status/ns#term_status</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/Person</uri>
+      </binding>
+      <binding name="obj">
+        <literal>A person.</literal>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2000/01/rdf-schema#comment</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/Organization</uri>
+      </binding>
+      <binding name="obj">
+        <uri>http://xmlns.com/foaf/0.1/</uri>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2000/01/rdf-schema#isDefinedBy</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/Organization</uri>
+      </binding>
+      <binding name="obj">
+        <uri>http://xmlns.com/foaf/0.1/Person</uri>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2002/07/owl#disjointWith</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/Project</uri>
+      </binding>
+      <binding name="obj">
+        <literal>Project</literal>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2000/01/rdf-schema#label</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/OnlineAccount</uri>
+      </binding>
+      <binding name="obj">
+        <uri>http://xmlns.com/foaf/0.1/</uri>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2000/01/rdf-schema#isDefinedBy</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/mbox</uri>
+      </binding>
+      <binding name="obj">
+        <uri>http://www.w3.org/2002/07/owl#InverseFunctionalProperty</uri>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/gender</uri>
+      </binding>
+      <binding name="obj">
+        <uri>http://www.w3.org/2000/01/rdf-schema#Literal</uri>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2000/01/rdf-schema#range</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/geekcode</uri>
+      </binding>
+      <binding name="obj">
+        <literal>geekcode</literal>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/2000/01/rdf-schema#label</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="sub">
+        <uri>http://xmlns.com/foaf/0.1/geekcode</uri>
+      </binding>
+      <binding name="obj">
+        <uri>http://www.w3.org/2002/07/owl#DatatypeProperty</uri>
+      </binding>
+      <binding name="pred">
+        <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>
