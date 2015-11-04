@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml version="2.0" lang="en">
+<form>
+
+<field name="city">
+<prompt>Where do you want to travel to?</prompt>
+<option>Edinburgh</option>
+<option>New York</option>
+<option>London</option>
+<option>Paris</option>
+<option>Stockholm</option>
+</field>
+
+<field name="travellers" type="number">
+<prompt>How many are travelling to <value expr="city"/>?</prompt>
+</field>
+
+<block>
+<submit next="http://localhost/handler" namelist="city travellers"/>
+</block>
+
+</form>
+</vxml>
+
