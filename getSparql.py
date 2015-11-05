@@ -37,45 +37,75 @@ def executeSparqlQuery(query, url):
 
     results = []
     for result in iteratorResults:
-        #results.append([])
+        results.append([])
         line = ""
         for item in result:
             for content in item:
-                #when there are more than 2 columns, add them seperated by a space
-                if line != "":
-                    line += " "
-                line += content.text
-        results.append(line)
+                results[len(results)-1].append(content.text)
+
+    for row in results:
+        line = ""
+        for entry in row:
+             line += entry + "\t"
+        print line
+
+
+
+
 
     return results
 
-def createVoiceXML(  questionText, choices,  query = ""):
+def createVoiceXML(  questionText, choices,  query = "", fullVxml = False):
 
-    outputRoot = ET.Element("vxml")
-    outputRoot.set("version","2.0")
-    outputRoot.set("lang","en")
+    if fullVxml:
+        outputRoot = ET.Element("vxml")
+        outputRoot.set("version","2.0")
+        outputRoot.set("lang","en")
 
-    comment = ET.Comment('Generated from sparql query:\n' + query + "\n")
-    outputRoot.append(comment)
 
-    formElement = ET.Element("form")
-    outputRoot.append(formElement)
+
+        formElement = ET.Element("form")
+        outputRoot.append(formElement)
+
+
 
     fieldElement = ET.Element("field")
     fieldElement.set("name","choice")
-    outputRoot.append(fieldElement)
+    if fullVxml:
+        outputRoot.append(fieldElement)
+
+
+    comment = ET.Comment('Generated from sparql query:\n' + query + "\n")
+    fieldElement.append(comment)
 
     questionElement = ET.SubElement(fieldElement,"prompt")
     questionElement.text = question
 
+    numberOfChoices = 0
     for choice in choices:
+        numberOfChoices += 1
         optionElement = ET.SubElement(fieldElement,"option")
-        optionElement.text = choice
+        optionElement.set("name",choice[0])
+        optionElement.set("dtmf",str(numberOfChoices))
+        audioElement = ET.SubElement(optionElement, "audio")
+        audioElement.set("src",choice[1])
 
-    return prettify(outputRoot)
+
+    if fullVxml: return prettify(outputRoot)
+    else: return prettify(fieldElement)
 
 question = "Dit is de vraag die bij de query hoort"
 
+
+newquery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?person ?voicelabel_en  WHERE {
+      ?person
+          rdf:type ns1:Person  .
+            ?person ns1:contact_fname ?fname .
+              ?person ns1:contact_lname ?lname.
+                  ?person speakle:voicelabel_en ?voicelabel_en
+}
+LIMIT 5"""
 
 queryReadable = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     SELECT DISTINCT ?fname ?lname WHERE {
@@ -90,6 +120,6 @@ sparqlURL = "http://192.168.3.13:3020/sparql/?query="
 
 
 
-print createVoiceXML( question,executeSparqlQuery(queryReadable, sparqlURL),queryReadable)
+print createVoiceXML( question,executeSparqlQuery(newquery, sparqlURL),newquery,True)
 
 #print "requested: " + requestURL + "\n"
