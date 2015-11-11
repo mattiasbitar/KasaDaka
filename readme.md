@@ -134,6 +134,12 @@ create symlink to config files in git
 
 sudo ln -s /home/pi/KasaDaka/etc/asterisk/ /etc/asterisk
 
+##install apache2
+
+create audio file storage
+
+
+
 
 
 
