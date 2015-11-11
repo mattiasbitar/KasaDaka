@@ -10,7 +10,8 @@ def prettify(elem):
     #"""Return a pretty-printed XML string for the Element. """
     rough_string = ET.tostring(elem, 'utf-8')
     reparsed = minidom.parseString(rough_string)
-    return reparsed.toprettyxml(indent="  ")
+    return rough_string
+    #return reparsed.toprettyxml(indent="  ")
 
 
 
@@ -47,7 +48,7 @@ def executeSparqlQuery(query, url):
         line = ""
         for entry in row:
              line += entry + "\t"
-        print line
+        #print line
 
 
 
@@ -98,11 +99,13 @@ question = "Dit is de vraag die bij de query hoort"
 
 
 newquery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
 SELECT DISTINCT ?person ?voicelabel_en  WHERE {
       ?person
-          rdf:type ns1:Person  .
-            ?person ns1:contact_fname ?fname .
-              ?person ns1:contact_lname ?lname.
+          rdf:type radiomarche:Person  .
+            ?person radiomarche:contact_fname ?fname .
+              ?person radiomarche:contact_lname ?lname.
                   ?person speakle:voicelabel_en ?voicelabel_en
 }
 LIMIT 5"""
@@ -116,7 +119,7 @@ queryReadable = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     }
     LIMIT 5"""
 
-sparqlURL = "http://192.168.3.13:3020/sparql/?query="
+sparqlURL = "http://127.0.0.1:3020/sparql/?query="
 
 
 
