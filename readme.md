@@ -10,7 +10,7 @@ run all updates, upgrade, dist-upgrade
 
 ##SWIPL COMPILE
 sudo apt-get install \
-        build-essential autoconf curl chrpath pkg-config \
+        build-essential autoconf apache2 curl chrpath pkg-config \
         ncurses-dev libreadline-dev \
         libgmp-dev \
         libssl-dev \
@@ -19,8 +19,7 @@ sudo apt-get install \
         libossp-uuid-dev \
         libxext-dev libice-dev libjpeg-dev libxinerama-dev libxft-dev \
         libxpm-dev libxt-dev \
-        libdb-dev \
-        openjdk-7-jdk junit git tmux libxml2 htop libsqlite3-dev
+        libdb-dev openjdk-7-jdk junit git tmux libxml2 htop libsqlite3-dev php5 libapache2-mod-php5
 
 git clone https://github.com/SWI-Prolog/swipl-devel.git
 
@@ -144,10 +143,8 @@ sudo ln -s /home/pi/KasaDaka/etc/asterisk/ /etc/asterisk
 
 create audio file storage
 
+#todo nog invullen de symlink var www naar git map
 
+installing tts
 
-Problemen: [Nov 17 15:00:15] WARNING[14927]: loader.c:486 load_dynamic_module: Error loading module 'app_vxml.so': /usr/lib/asterisk/modules/app_vxml.so: undefined symbol: ast_settimeout_full
-[Nov 17 15:00:15] WARNING[14927]: loader.c:902 load_resource: Module 'app_vxml.so' could not be loaded.
-
-
-
+sudo apt-get install flite
