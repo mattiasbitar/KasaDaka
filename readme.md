@@ -19,7 +19,7 @@ sudo apt-get install \
         libossp-uuid-dev \
         libxext-dev libice-dev libjpeg-dev libxinerama-dev libxft-dev \
         libxpm-dev libxt-dev \
-        libdb-dev openjdk-7-jdk junit git tmux libxml2 htop libsqlite3-dev php5 libapache2-mod-php5
+        libdb-dev openjdk-7-jdk junit git tmux libxml2 htop libsqlite3-dev php5 libapache2-mod-php5 flite
 
 git clone https://github.com/SWI-Prolog/swipl-devel.git
 
