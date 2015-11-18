@@ -59,9 +59,9 @@ user:kasadaka pass:kasadaka
 ##ASTERISK + VXML
 cd ~
 
-wget http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-11.6-current.tar.gz
+wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-11-current.tar.gz
 
-tar -xvf certified-asterisk-11.6-current.tar.gz
+tar -xvf de tarball
 
 ~~#dahdi compilen nog niet werkend...
 
@@ -79,6 +79,8 @@ sudo make config~~
 
 cd ../certified-asterisk-11.6-cert11
 
+
+
 sudo  ./configure --disable-xmldoc
 
 cd contrib/scripts
@@ -88,6 +90,10 @@ sudo ./install_prereq install
 ~~sudo ./install_prereq install-unpackaged (svn not found??)~~
 
 cd ../..
+
+sudo make menuselect
+
+Make sure here that the channel driver for SIP is selected!!
 
 sudo make
 
@@ -113,10 +119,10 @@ cd vxml_V11.0_2014-12-20_dev_armv6_debian-7.0
 sudo ./install.sh
 
 
-sudo /etc/init.d/asterisk restart
 
 sudo /etc/init.d/openvxi start
 
+sudo /etc/init.d/asterisk restart
 
 ##asterisk should be working now. Proceed to link config files to kasadaka folder
 
@@ -140,6 +146,8 @@ create audio file storage
 
 
 
+Problemen: [Nov 17 15:00:15] WARNING[14927]: loader.c:486 load_dynamic_module: Error loading module 'app_vxml.so': /usr/lib/asterisk/modules/app_vxml.so: undefined symbol: ast_settimeout_full
+[Nov 17 15:00:15] WARNING[14927]: loader.c:902 load_resource: Module 'app_vxml.so' could not be loaded.
 
 
 
