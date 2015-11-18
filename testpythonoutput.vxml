@@ -1,4 +1,8 @@
-<vxml lang="en" version="2.0"><form /><field name="choice"><!--Generated from sparql query:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.0" xmlns="http://www.w3.org/2001/vxml" xml:lang="en-US">
+
+<menu dtmf="true"><!--Generated from sparql query:
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
 PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
@@ -10,4 +14,13 @@ SELECT DISTINCT ?person ?voicelabel_en  WHERE {
                   ?person speakle:voicelabel_en ?voicelabel_en
 }
 LIMIT 5
---><prompt>Dit is de vraag die bij de query hoort<enumerate/></prompt><option dtmf="1" name="http://purl.org/collections/w4ra/radiomarche/Abdias_Dabou"><audio src="http://127.0.0.1/audio/AbdiasDabou_en.wav" /></option><option dtmf="2" name="http://purl.org/collections/w4ra/radiomarche/Andia_Kalakodio"><audio src="http://127.0.0.1/audio/AndiaKalakodio_en.wav" /></option><option dtmf="3" name="http://purl.org/collections/w4ra/radiomarche/Birawe_Domboua"><audio src="http://127.0.0.1/audio/BiraweDomboua_en.wav" /></option><option dtmf="4" name="http://purl.org/collections/w4ra/radiomarche/Fidel_Kone"><audio src="http://127.0.0.1/audio/FidelKone_en.wav" /></option><option dtmf="5" name="http://purl.org/collections/w4ra/radiomarche/Fidel_kone"><audio src="http://127.0.0.1/audio/Fidelkone_en.wav" /></option></field></vxml>
+-->
+<prompt bargein="true">Dit is de vraag die bij de query hoort
+<audio src="http://192.168.3.13/audio/450_00_nl.wav" />
+<enumerate/>
+
+</prompt><choice next="http://192.168.3.13/helloworld2.vxml" dtmf="1" name="http://purl.org/collections/w4ra/radiomarche/Abdias_Dabou"><prompt><audio src="http://192.168.3.13/audio/450_00_nl.wav" /></prompt></choice>
+<choice dtmf="2" next="testpythonoutput.vxml"  name="http://purl.org/collections/w4ra/radiomarche/Andia_Kalakodio"><audio src="http://127.0.0.1/audio/AndiaKalakodio_en.wav" /></choice>
+<choice dtmf="3"  next="testpythonoutput.vxml" name="http://purl.org/collections/w4ra/radiomarche/Birawe_Domboua"><audio src="http://127.0.0.1/audio/AndiaKalakodio_en.wav" /></choice>
+<choice dtmf="4" next="testpythonoutput.vxml" name="http://purl.org/collections/w4ra/radiomarche/Fidel_Kone"><audio src="http://127.0.0.1/audio/AndiaKalakodio_en.wav" /></choice>
+<choice dtmf="5" next="testpythonoutput.vxml" name="http://purl.org/collections/w4ra/radiomarche/Fidel_kone"><audio src="http://127.0.0.1/audio/AndiaKalakodio_en.wav" /></choice></menu></vxml>
