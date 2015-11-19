@@ -1,0 +1,11 @@
+{% extends "vxmlLayout.vxml" %}
+{% block content %}
+<form>
+<block>
+<prompt>
+<audio src="{{ messageaudio }}"/>
+</prompt>
+</block>
+</form>
+
+{% endblock %}
