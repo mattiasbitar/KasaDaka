@@ -1,17 +1,20 @@
 {% extends "vxmlLayout.vxml" %}
 {% block content %}
+{% block result %}
 <menu dtmf="true">
 <block>
 <prompt>
-<audio src="{{ messageAudio }}"/>
+
+<audio src="{{ interfaceAudioDir ~ messageAudio }}"/>
 {% for option in results %}
     {% for suboption in option %}
     <audio src="{{ suboption }}"/>
     {% endfor %}
 {% endfor %}
 </prompt>
-<goto next='main.vxml?state={{state}}' />
+<goto next='{{ redirect }}' />
 </block>
 
 </menu>
+{% endblock %}
 {% endblock %}

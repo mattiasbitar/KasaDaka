@@ -2,11 +2,14 @@
 
 
 {% block content %}
-
+{% block menu %}
 
 {% block optionalMessage %}
 {% endblock %}
 {% block menuEnumerate %}
+
+{# TODO: what if there are more than 9 options? Paginate?!  #}
+
 <menu dtmf="true" id="menu">
 <prompt>
 <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
@@ -30,4 +33,5 @@
 {% endblock %}
 
 </menu>
+{% endblock %}
 {% endblock %}
