@@ -1,24 +1,33 @@
 {% extends "vxmlLayout.vxml" %}
+
+
 {% block content %}
-<menu dtmf="true">
+
+
+{% block optionalMessage %}
+{% endblock %}
+{% block menuEnumerate %}
+<menu dtmf="true" id="menu">
 <prompt>
-<audio src="{{ questionaudio }}"/>
-{% for option in results %}
+<audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
+{% for option in options %}
     {#for..#}
-    <audio src="{{ questionaudiodir ~ "preoption.wav" }}"/>
+    <audio src="{{ interfaceAudioDir ~ "preoption.wav" }}"/>
     {#option#}
     <audio src="{{ option[1] }}"/>
     {#press#}
-    <audio src="{{ questionaudiodir ~ "postoption.wav" }}"/>
+    <audio src="{{ interfaceAudioDir ~ "postoption.wav" }}"/>
     {#number#}
-    <audio src="{{ questionaudiodir ~ "dtmf" ~ loop.index ~ ".wav" }}"/>
+    <audio src="{{ interfaceAudioDir ~ "dtmf" ~ loop.index ~ ".wav" }}"/>
 {% endfor %}
 </prompt>
+{% endblock %}
 
-{% for option in results %}
+{% block processChoice %}
+{% for option in options %}
     <choice dtmf="{{ loop.index }}" next="main.vxml?state={{ state }}&data={{ option[0] }}" name="{{option[0]}}"/>
 {% endfor %}
-
+{% endblock %}
 
 </menu>
 {% endblock %}

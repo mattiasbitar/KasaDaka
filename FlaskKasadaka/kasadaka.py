@@ -34,14 +34,14 @@ def post():
 
 @app.route('/main.vxml')
 def main():
-    if 'state' in request.args and 'data' in request.args:
-        return callhandler.handle(request.args['state'],request.args['data'])
-    elif 'state' in request.args:
-        return callhandler.handle(request.args['state'])
-    elif 'data' in request.args:
-        return callhandler.handle(request.args['data'])
-    else:
-        return callhandler.handle()
+    options = [
+            ['requestProductOfferings.vxml','interface/requestProductOfferings.wav'],
+            ['chooseProductToMakeOffer','interface/chooseProductToMakeOffer.wav']
+            ]
+
+
+    return render_template('main.vxml', interfaceAudioDir = 'interface/', welcomeAudio = 'welcome.wav', questionAudio = "mainMenuQuestion.wav", options = options)
+
     #return menu("interface/samplequestion.wav",executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     #PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     #PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
@@ -55,5 +55,3 @@ def main():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",debug=config.debug)
-
-

@@ -14,10 +14,10 @@ def handle(state = "",data = ""):
                 "giveProductOfferings" : mainMenu,
 
                 #when user selected to put an offer and selected the product, ask for price, then identification, then to confir, return to menu
-                "" : enterPrice,
-                "enterPrice" : identification,
-                "identification" : confirm,
-                "confirm" : mainMenu,
+                # "" : enterPrice,
+                # "enterPrice" : identification,
+                # "identification" : confirm,
+                # "confirm" : mainMenu,
 
             }
     return flow[state](data)
@@ -65,7 +65,3 @@ def giveProductOfferings(data):
 
     resultAudio = 'interface/announceresults.wav'
     return kasadaka.result('giveProductOfferings',resultAudio,executeSparqlQuery(query))
-
-
-
-
