@@ -1,0 +1,17 @@
+{% extends "vxmlLayout.vxml" %}
+{% block content %}
+<menu dtmf="true">
+<block>
+<prompt>
+<audio src="{{ messageAudio }}"/>
+{% for option in results %}
+    {% for suboption in option %}
+    <audio src="{{ suboption }}"/>
+    {% endfor %}
+{% endfor %}
+</prompt>
+<goto next='main.vxml?state={{state}}' />
+</block>
+
+</menu>
+{% endblock %}

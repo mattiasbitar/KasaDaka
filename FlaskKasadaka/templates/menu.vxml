@@ -16,7 +16,7 @@
 </prompt>
 
 {% for option in results %}
-    <choice dtmf="{{ loop.index }}" next="main.vxml" name="{{option[0]}}"/>
+    <choice dtmf="{{ loop.index }}" next="main.vxml?state={{ state }}&data={{ option[0] }}" name="{{option[0]}}"/>
 {% endfor %}
 
 

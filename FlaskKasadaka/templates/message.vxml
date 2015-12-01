@@ -5,6 +5,7 @@
 <prompt>
 <audio src="{{ messageaudio }}"/>
 </prompt>
+<goto next="main.vxml?state={{ state }}"/>
 </block>
 </form>
 
