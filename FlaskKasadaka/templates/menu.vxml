@@ -25,7 +25,7 @@
 
 {% block processChoice %}
 {% for option in options %}
-    <choice dtmf="{{ loop.index }}" next="option[0]" name="{{option[0]}}"/>
+    <choice dtmf="{{ loop.index }}" next="{{option[0]}}" name="{{option[0]}}"/>
 {% endfor %}
 {% endblock %}
 
