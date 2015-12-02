@@ -6,11 +6,11 @@
 
 {% block optionalMessage %}
 {% endblock %}
-{% block menuEnumerate %}
 
+{% macro createMenu(menuID,interfaceAudioDir,questionAudio,options)}
 {# TODO: what if there are more than 9 options? Paginate?!  #}
 
-<menu dtmf="true" id="menu">
+<menu dtmf="true" id="{{ menuID }}">
 <prompt>
 <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
 {% for option in options %}
@@ -24,14 +24,17 @@
     <audio src="{{ interfaceAudioDir ~ "dtmf" ~ loop.index ~ ".wav" }}"/>
 {% endfor %}
 </prompt>
-{% endblock %}
 
-{% block processChoice %}
+
+
 {% for option in options %}
     <choice dtmf="{{ loop.index }}" next="{{option[0]}}" name="{{option[0]}}"/>
 {% endfor %}
-{% endblock %}
 
 </menu>
+
+{% endmacro %}
+{{ createMenu("menu",interfaceAudioDir,questionAudio,options) }}
+
 {% endblock %}
 {% endblock %}
