@@ -14,7 +14,7 @@ def executeSparqlQuery(query, url = config.sparqlURL):
     queryHtmlFormat = urllib.quote(query)
     #requestURL = "http://cliopatria.swi-prolog.org/sparql/?query=" + query
     requestURL = url + queryHtmlFormat
-    print "requesting: "+requestURL
+    #print "requesting: "+requestURL
     resultXML = urllib2.urlopen(requestURL).read()
     #XML parsing proberen
     root = ET.fromstring(resultXML)
