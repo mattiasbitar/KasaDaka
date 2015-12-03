@@ -7,7 +7,7 @@
 {% block optionalMessage %}
 {% endblock %}
 
-{% macro createMenu(menuID,interfaceAudioDir,questionAudio,options)}
+{% macro createMenu(menuID,interfaceAudioDir,questionAudio,options) %}
 {# TODO: what if there are more than 9 options? Paginate?!  #}
 
 <menu dtmf="true" id="{{ menuID }}">

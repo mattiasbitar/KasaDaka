@@ -17,14 +17,14 @@ def main():
         lang = config.LanguageVars(request.args)
         #list of options in initial menu: link to file, and audio description of the choice
         options = [
-                ['requestProductOfferings.vxml?lang='+lang,    audioInterfaceURL+'requestProductOfferings.wav'],
-                ['placeProductOffer.vxml?lang='+lang,   audioInterfaceURL+'placeProductOffer.wav']
+                ['requestProductOfferings.vxml?lang='+lang.language,    lang.audioInterfaceURL+'requestProductOfferings.wav'],
+                ['placeProductOffer.vxml?lang='+lang.language,   lang.audioInterfaceURL+'placeProductOffer.wav']
                 ]
 
 
         return render_template(
         'main.vxml',
-        interfaceAudioDir = audioInterfaceURL,
+        interfaceAudioDir = lang.audioInterfaceURL,
         welcomeAudio = 'welcome.wav',
         questionAudio = "mainMenuQuestion.wav",
         options = options)
