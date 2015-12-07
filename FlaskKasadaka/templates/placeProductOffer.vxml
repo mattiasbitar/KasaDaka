@@ -7,7 +7,7 @@
     </prompt>
 
     <filled>
-      <goto next="{{ goto }}"/>
+{#      <goto next="{{ goto }}"/> #}
     </filled>
   </field>
 
@@ -37,7 +37,7 @@
     <option dtmf="{{ loop.index }}" value="{{option[0]}}"/>
 {% endfor %}
 <filled>
-<goto next="{{ goto }}"/>
+{# <goto next="{{ goto }}"/> #}
 </filled>
 
 </field>
