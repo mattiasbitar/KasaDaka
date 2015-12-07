@@ -1,0 +1,66 @@
+{% extends 'vxmlLayout.vxml' %}
+
+{% macro enterDtmfValue(fieldName,minInputLength,maxInputLength,interfaceAudioDir,questionAudio,goto) %}
+  <field name="{{ fieldName }}" type="digits?minlength={{ minInputLength }};maxlength={{ maxInputLength }}">
+    <prompt>
+    <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
+    </prompt>
+
+    <filled>
+      <goto next="#{{ goto }}"/>
+    </filled>
+  </field>
+
+{% endmacro %}
+
+{% macro createLocalMenu(menuID,interfaceAudioDir,questionAudio,options,goto) %}
+{# TODO: what if there are more than 9 options? Paginate?!  #}
+
+<field name="{{menuID}}">
+<prompt>
+<audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
+{% for option in options %}
+    {#for..#}
+    <audio src="{{ interfaceAudioDir ~ "preoption.wav" }}"/>
+    {#option#}
+    <audio src="{{ option[1] }}"/>
+    {#press#}
+    <audio src="{{ interfaceAudioDir ~ "postoption.wav" }}"/>
+    {#number#}
+    <audio src="{{ interfaceAudioDir ~ "dtmf" ~ loop.index ~ ".wav" }}"/>
+{% endfor %}
+</prompt>
+
+
+
+{% for option in options %}
+    <option dtmf="{{ loop.index }}" value="{{option[0]}}"/>
+{% endfor %}
+<filled>
+</filled>
+<goto next="#{{ goto }}"/>
+</field>
+
+{% endmacro %}
+
+
+
+{% block content %}
+<goto next="#person"/>
+{{ createLocalMenu("person",interfaceAudioDir,personQuestionAudio,personOptions,"product") }}
+{{ createLocalMenu("product",interfaceAudioDir,productQuestionAudio,productOptions,"quantity") }}
+{{ enterDtmfValue("quantity",1,9,interfaceAudioDir,quantityQuestionAudio,"location") }}
+{{ createLocalMenu("location",interfaceAudioDir,personQuestionAudio,locationOptions,"currency") }}
+{{ createLocalMenu("currency",interfaceAudioDir,personQuestionAudio,currencyOptions,"price") }}
+{{ enterDtmfValue("price",1,9,interfaceAudioDir,priceQuestionAudio,"submit") }}
+
+<block name="submit">
+<submit next="placeProductOffer.vxml" method="get"/>
+</block>
+
+
+
+
+
+
+{% endblock %}

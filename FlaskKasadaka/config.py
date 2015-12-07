@@ -18,6 +18,11 @@ class LanguageVars(object):
     audioInterfaceURL = audioURLbase + defaultLanguage + "/interface/"
     language = defaultLanguage
 
+    def replaceVoicelabels(inputQuery,
+    voicelabelToReplace = "speakle:voicelabel_en",
+    voicelabelReplacement = "speakle:voicelabel_"):
+        return inputQuery.replace(voicelabelToReplace,voicelabelReplacement+language)
+
     def __init__(self,languageInit):
         if type(languageInit) is not str and 'lang' in languageInit:
              self.audioURL = audioURLbase + languageInit['lang'] + "/"
