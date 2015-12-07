@@ -107,8 +107,7 @@ def placeProductOffer():
 
 
     #if all the nessecary variables are set, update data in store
-    if 'user' in request.args and 'product' in request.args and 'location' in request.args
-    and 'price' in request.args and 'currency' in request.args and 'quantity' in request.args and 'confirm' in request.args:
+    if 'user' in request.args and 'product' in request.args and 'location' in request.args and 'price' in request.args and 'currency' in request.args and 'quantity' in request.args and 'confirm' in request.args:
         user = request.args['user']
         product = request.args['product']
         location = request.args['location']
@@ -187,13 +186,19 @@ def placeProductOffer():
             }
             LIMIT 10""")
 
-    for choice in choices:
-        choice[0] = 'placeProductOffer.vxml?choice=' + choice[0]
     return render_template(
-    'menu.vxml',
-    options = choices,
-    interfaceAudioDir = config.interfaceURL,
-    questionAudio = "chooseYourProduct.wav"
+    'placeProductOffer.vxml',
+    personOptions = userChoices,
+    personQuestionAudio = "placeProductOffer_person.wav",
+    productOptions = productChoices,
+    productQuestionAudio = "placeProductOffer_product.wav",
+    locationOptions = locationChoices,
+    locationQuestionAudio = "placeProductOffer_location.wav",
+    currencyOptions = currencyChoices,
+    currencyQuestionAudio = "placeProductOffer_currency.wav",
+    quantityQuestionAudio = "placeProductOffer_quantity.wav",
+    priceQuestionAudio = "placeProductOffer_price.wav",
+    interfaceAudioDir = config.interfaceURL
     )
 
 
