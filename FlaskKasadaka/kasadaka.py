@@ -13,7 +13,7 @@ def index():
 
 @app.route('/main.vxml')
 def main():
-    if 'lang' in request.args:
+    # if 'lang' in request.args:
         lang = config.LanguageVars(request.args)
         #list of options in initial menu: link to file, and audio description of the choice
         options = [
@@ -28,9 +28,29 @@ def main():
         welcomeAudio = 'welcome.wav',
         questionAudio = "mainMenuQuestion.wav",
         options = options)
-    else:
-        #return "give language (not yet implemented)"
-        return """<goto next="main.vxml?lang=en"/>"""
+    # else:
+        #give your language
+        # languageQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        #     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        #     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+        #     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+        #
+        #     SELECT DISTINCT ?voicelabel   WHERE {
+        #     ?voicelabel   rdfs:subPropertyOf speakle:voicelabel
+        #
+        #     }
+        #     LIMIT 9"""
+        # languages = executeSparqlQuery(languageQuery)
+        #
+        # return render_template(
+        # 'menu.vxml',
+        # options = languages,
+        # interfaceAudioDir = config.LanguageVars.audioInterfaceURL,
+        # questionAudio = "chooseLanguage.wav"
+
+        )
+
+
 @app.route('/requestProductOfferings.vxml')
 def requestProductOfferings():
     #process the language

@@ -1,4 +1,9 @@
 todo:
+
+DATA todo:
+languages hebben nog geen audio label
+toevoegen: language code: 'en', 'fr', etc...
+
 paginering menus
 voice inspreek frontend maken
 nummer generator, voor een taal, met zo min mogelijk gesproken tekst, alle nummers in wav files zetten
