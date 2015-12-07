@@ -112,7 +112,7 @@ def requestProductOfferings():
     #add the url of this page to the links, so the user gets the results
     #also keep the language
     for choice in choices:
-        choice[0] = 'requestProductOfferings.vxml?lang='+lang.language+'&product=' + choice[0] + "&"
+        choice[0] = 'requestProductOfferings.vxml?lang='+lang.language+'&amp;product=' + choice[0]
 
     return render_template(
     'menu.vxml',
