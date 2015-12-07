@@ -34,11 +34,11 @@ def executeSparqlQuery(query, url = config.sparqlURL):
             for content in item:
                 results[len(results)-1].append(urllib.quote(content.text))
 
-    # for row in results:
-    #     line = ""
-    #     for entry in row:
-    #          line += entry + "\t"
-    #     print line
+    for row in results:
+        line = ""
+        for entry in row:
+             line += entry + "\t"
+        print line
 
 
 
