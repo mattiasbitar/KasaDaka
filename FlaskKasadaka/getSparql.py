@@ -32,7 +32,9 @@ def executeSparqlQuery(query, url = config.sparqlURL):
         results.append([])
         for item in result:
             for content in item:
-                results[len(results)-1].append(urllib.urlencode(content.text))
+                toAppend = urllib.quote_plus(content.text)
+                toAppend = toAppend.replace("-","%2D")
+                results[len(results)-1].append(toAppend)
 
     for row in results:
         line = ""
