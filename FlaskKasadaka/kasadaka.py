@@ -29,8 +29,8 @@ def main():
         questionAudio = "mainMenuQuestion.wav",
         options = options)
     else:
-        return "give language (not yet implemented)"
-
+        #return "give language (not yet implemented)"
+        return """<goto next="main.vxml?lang=en"/>"""
 @app.route('/requestProductOfferings.vxml')
 def requestProductOfferings():
     #process the language

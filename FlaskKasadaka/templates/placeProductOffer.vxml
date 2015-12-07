@@ -37,8 +37,9 @@
     <option dtmf="{{ loop.index }}" value="{{option[0]}}"/>
 {% endfor %}
 <filled>
-</filled>
 <goto next="#{{ goto }}"/>
+</filled>
+
 </field>
 
 {% endmacro %}
