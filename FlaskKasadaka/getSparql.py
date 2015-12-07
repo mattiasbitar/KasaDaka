@@ -30,16 +30,15 @@ def executeSparqlQuery(query, url = config.sparqlURL):
     results = []
     for result in iteratorResults:
         results.append([])
-        line = ""
         for item in result:
             for content in item:
-                results[len(results)-1].append(content.text)
+                results[len(results)-1].append(urllib.quote(content.text))
 
-    for row in results:
-        line = ""
-        for entry in row:
-             line += entry + "\t"
-        #print line
+    # for row in results:
+    #     line = ""
+    #     for entry in row:
+    #          line += entry + "\t"
+    #     print line
 
 
 

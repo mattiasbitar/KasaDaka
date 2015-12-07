@@ -6,6 +6,7 @@ from getSparql import executeSparqlQuery
 import config
 import callhandler
 
+
 app = Flask(__name__)
 @app.route('/')
 def index():
