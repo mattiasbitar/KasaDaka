@@ -10,7 +10,8 @@
 {% macro createMenu(menuID,interfaceAudioDir,questionAudio,options) %}
 {# TODO: what if there are more than 9 options? Paginate?!  #}
 
-<menu dtmf="true" id="{{ menuID }}">
+<form  id="{{ menuID }}">
+<field name="menu">
 <prompt>
 <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
 {% for option in options %}
@@ -25,13 +26,37 @@
 {% endfor %}
 </prompt>
 
+<grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
+      <rule id="MYRULE" scope = "public">
+        <one-of>
+          <item> 1 </item>
+          {% for option in options %}
+            <item>{{ loop.index }}</item>
+          {% endfor %}
+        </one-of>
+       </rule>
+     </grammar>
 
 
-{% for option in options %}
-    <choice dtmf="{{ loop.index }}" next="{{option[0]}}" name="{{option[0]}}"/>
-{% endfor %}
 
-</menu>
+<filled namelist="menu">
+    {% for option in options %}
+      {% if loop.index == 1 %}
+      <if cond="menu == {{ loop.index }}">
+      <goto next="{{option[0]}}"/>
+      {% else %}
+      <elseif cond="menu == {{ loop.index }}" />
+      <goto next="{{option[0]}}"/>
+      {% endif %}
+    {% endfor %}
+
+
+    <else/>
+    </if>
+  </filled>
+
+</field>
+</form>
 
 {% endmacro %}
 {{ createMenu("menu",interfaceAudioDir,questionAudio,options) }}
