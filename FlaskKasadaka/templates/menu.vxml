@@ -41,10 +41,10 @@
 <filled>
     {% for option in options %}
       {% if loop.index == 1 %}
-      <if cond="menu == '{{ loop.index }}'">
+      <if cond="question1 == '{{ loop.index }}'">
       <goto next="{{option[0]}}"/>
       {% else %}
-      <elseif cond="menu == '{{ loop.index }}'" />
+      <elseif cond="question1 == '{{ loop.index }}'" />
       <goto next="{{option[0]}}"/>
       {% endif %}
     {% endfor %}
