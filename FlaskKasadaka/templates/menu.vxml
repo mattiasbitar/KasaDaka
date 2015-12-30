@@ -29,7 +29,6 @@
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
       <rule id="MYRULE" scope = "public">
         <one-of>
-          <item> 1 </item>
           {% for option in options %}
             <item>{{ loop.index }}</item>
           {% endfor %}
@@ -42,10 +41,10 @@
 <filled namelist="menu">
     {% for option in options %}
       {% if loop.index == 1 %}
-      <if cond="menu == {{ loop.index }}">
+      <if cond="menu == '{{ loop.index }}'">
       <goto next="{{option[0]}}"/>
       {% else %}
-      <elseif cond="menu == {{ loop.index }}" />
+      <elseif cond="menu == '{{ loop.index }}'" />
       <goto next="{{option[0]}}"/>
       {% endif %}
     {% endfor %}
