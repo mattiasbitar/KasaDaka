@@ -1,7 +1,7 @@
 {% extends "vxmlLayout.vxml" %}
 {% block content %}
 {% block result %}
-<menu dtmf="true">
+
 <block>
 <prompt>
 
@@ -15,6 +15,6 @@
 <goto next='{{ redirect }}' />
 </block>
 
-</menu>
+
 {% endblock %}
 {% endblock %}
