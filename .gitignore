@@ -1,2 +1,4 @@
 .exampleSparqlOutput.xml.swp
 *.pyc
+*.swp
+
