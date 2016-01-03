@@ -119,9 +119,9 @@ sudo ./install.sh
 
 
 
-sudo /etc/init.d/openvxi start
+sudo /etc/init.d/openvxi stop
 
-sudo /etc/init.d/asterisk restart
+sudo /etc/init.d/asterisk stop
 
 ##asterisk should be working now. Proceed to link config files to kasadaka folder
 
@@ -135,9 +135,17 @@ remove old config files
 
 sudo rm -rf /etc/asterisk/
 
+sudo rm -rf /etc/openvxi/
+
 create symlink to config files in git
 
 sudo ln -s /home/pi/KasaDaka/etc/asterisk/ /etc/asterisk
+
+sudo ln -s /home/pi/KasaDaka/etc/openvxi/ /etc/openvxi
+
+sudo /etc/init.d/openvxi start
+
+sudo /etc/init.d/asterisk start
 
 ##install apache2
 
