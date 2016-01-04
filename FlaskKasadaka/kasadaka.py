@@ -241,7 +241,7 @@ def audioReferences():
             if match != "\.wav":
                 results.append(match)
     #remove duplicates
-    #results.extend(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
+    results.extend(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
     usedWaveFiles = set(results)
 
     languages = getUsedLanguages()
@@ -256,10 +256,8 @@ def audioReferences():
                 existingWaveFiles.append(waveFile)
             else:
                 nonExistingWaveFiles.append(waveFile)
-                existingWaveFiles = sorted(existingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
-                                if item[0].isdigit() else float('inf'), item))
-                nonExistingWaveFiles = sorted(nonExistingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
-                                if item[0].isdigit() else float('inf'), item))
+                existingWaveFiles = sorted(existingWaveFiles)
+                nonExistingWaveFiles = sorted(nonExistingWaveFiles)
                 finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
 
