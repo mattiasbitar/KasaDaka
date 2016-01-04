@@ -238,7 +238,7 @@ def audioReferences():
         text = open(pythonFile).read()
         for match in wavFilePattern.findall(text):
             #ignore match on regex above
-            if match =! "\.wav":
+            if match != "\.wav":
                 results.append(match)
     #remove duplicates
     usedWaveFiles = set(results)
