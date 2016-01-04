@@ -7,6 +7,7 @@ import config
 import callhandler
 import glob
 import re
+import urllib
 
 app = Flask(__name__)
 @app.route('/')
@@ -236,10 +237,21 @@ def audioReferences():
         for match in wavFilePattern.findall(text):
             results.append(match)
     #remove duplicates
-    results = set(results)
+    usedWaveFiles = set(results)
+
+    #check whether file is exists and is accessible
+    nonExistingWaveFiles = []
+    existingWaveFiles = []
+    for waveFile in usedWaveFiles:
+        url = config.audioURLbase + waveFile
+        if urllib.urlopen(url).getcode() == 200:
+            existingWaveFiles.append(waveFile)
+        else:
+            nonExistingWaveFiles.append(waveFile)
+
     return render_template(
     'audiofiles.html',
-    results = results)
+    results = nonExistingWaveFiles)
 
 
 if __name__ == '__main__':
