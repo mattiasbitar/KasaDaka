@@ -21,13 +21,13 @@
         Language: {{language[0]}}<br/>
         Existing Wave files:</br>
       <ul>
-      {% for existingFile in language[1]}
+      {% for existingFile in language[1] %}
         <li>{{ existingFile }}</li>
       {% endfor %}
       </ul>
       Missing Wave files:</br>
       <ul>
-        {% for notExistingFile in language[2]}
+        {% for notExistingFile in language[2] %}
           <li>{{ notExistingFile }}</li>
         {% endfor %}
 
