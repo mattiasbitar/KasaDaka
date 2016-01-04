@@ -63,6 +63,6 @@ SELECT DISTINCT ?language   WHERE {
     output = executeSparqlQuery(query)
     #get the language code behind the last slash
     for string in output:
-        results.append(string.rsplit('/', 1)[-1])
+        results.append(string[0].rsplit('/', 1)[-1])
 
     return results
