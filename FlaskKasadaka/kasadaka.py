@@ -228,6 +228,8 @@ def placeProductOffer():
 
 @app.route('/audioreferences.html')
 def audioReferences():
+    finalResults = []
+
     pythonFiles = glob.glob('*.py')
     pythonFiles.extend(glob.glob('templates/*'))
     results = []
@@ -235,25 +237,36 @@ def audioReferences():
     for pythonFile in pythonFiles:
         text = open(pythonFile).read()
         for match in wavFilePattern.findall(text):
-            results.append(match)
+            #ignore match on regex above
+            if match =! "\.wav":
+                results.append(match)
     #remove duplicates
     usedWaveFiles = set(results)
 
     #check whether file is exists and is accessible
+
     nonExistingWaveFiles = []
     existingWaveFiles = []
+    lang = 'en'
     for waveFile in usedWaveFiles:
         ## TODO: add support for languages, check files for every language
-        lang = 'en'
+
         url = config.audioURLbase +"/"+lang+"/"+ waveFile
         if urllib.urlopen(url).getcode() == 200:
             existingWaveFiles.append(waveFile)
         else:
             nonExistingWaveFiles.append(waveFile)
+    existingWaveFiles = sorted(existingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
+                               if item[0].isdigit() else float('inf'), item))
+    nonExistingWaveFiles = sorted(nonExistingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
+                               if item[0].isdigit() else float('inf'), item))
+    finalResults.append([lang,existingWaveFiles,nonExistingWaveFiles])
+
 
     return render_template(
     'audiofiles.html',
-    results = nonExistingWaveFiles)
+    scannedFiles = pythonFiles,
+    results = finalResults)
 
 
 if __name__ == '__main__':
