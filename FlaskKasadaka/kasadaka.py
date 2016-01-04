@@ -228,7 +228,7 @@ def placeProductOffer():
 @app.route('/audioreferences.html')
 def audioReferences():
     pythonFiles = glob.glob('*.py')
-    pythonFiles.extend(glob.glob('templates/*.py'))
+    pythonFiles.extend(glob.glob('templates/*'))
     results = []
     wavFilePattern = re.compile("""([^\s"']+\.wav)""",re.I)
     for pythonFile in pythonFiles:
