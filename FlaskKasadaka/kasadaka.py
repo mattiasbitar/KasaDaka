@@ -235,7 +235,7 @@ def audioReferences():
         for match in wavFilePattern.findall(pythonFile):
             results.append(match)
     return render_template(
-    'placeProductOffer.vxml',
+    'audiofiles.html',
     results = results)
 
 
