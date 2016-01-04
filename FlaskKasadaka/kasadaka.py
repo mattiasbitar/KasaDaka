@@ -234,7 +234,9 @@ def audioReferences():
         text = open(pythonFile).read()
         for match in wavFilePattern.findall(pythonFile):
             results.append(match)
-    return pythonFiles
+    return render_template(
+    'placeProductOffer.vxml',
+    results = results)
 
 
 if __name__ == '__main__':
