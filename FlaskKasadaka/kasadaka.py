@@ -245,7 +245,7 @@ def audioReferences():
     for waveFile in usedWaveFiles:
         ## TODO: add support for languages, check files for every language
         lang = 'en'
-        url = config.audioURLbase +"/"+lang+"/" waveFile
+        url = config.audioURLbase +"/"+lang+"/"+ waveFile
         if urllib.urlopen(url).getcode() == 200:
             existingWaveFiles.append(waveFile)
         else:
