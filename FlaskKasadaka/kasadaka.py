@@ -1,7 +1,7 @@
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
-from getSparql import executeSparqlQuery
+from getSparql import executeSparqlQuery, getUsedLanguages
 
 import config
 import callhandler
@@ -228,7 +228,7 @@ def placeProductOffer():
 
 @app.route('/audioreferences.html')
 def audioReferences():
-    finalResults = []
+    finalResultsInterface = []
 
     pythonFiles = glob.glob('*.py')
     pythonFiles.extend(glob.glob('templates/*'))
@@ -241,32 +241,32 @@ def audioReferences():
             if match != "\.wav":
                 results.append(match)
     #remove duplicates
+    results.append(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
     usedWaveFiles = set(results)
 
-    #check whether file is exists and is accessible
+    languages = getUsedLanguages()
+    for lang in languages:
+        nonExistingWaveFiles = []
+        existingWaveFiles = []
+        for waveFile in usedWaveFiles:
+            ## TODO: add support for languages, check files for every language
 
-    nonExistingWaveFiles = []
-    existingWaveFiles = []
-    lang = 'en'
-    for waveFile in usedWaveFiles:
-        ## TODO: add support for languages, check files for every language
-
-        url = config.audioURLbase +"/"+lang+"/interface/"+ waveFile
-        if urllib.urlopen(url).getcode() == 200:
-            existingWaveFiles.append(waveFile)
-        else:
-            nonExistingWaveFiles.append(waveFile)
-    existingWaveFiles = sorted(existingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
-                               if item[0].isdigit() else float('inf'), item))
-    nonExistingWaveFiles = sorted(nonExistingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
-                               if item[0].isdigit() else float('inf'), item))
-    finalResults.append([lang,existingWaveFiles,nonExistingWaveFiles])
+            url = config.audioURLbase +"/"+lang+"/interface/"+ waveFile
+            if urllib.urlopen(url).getcode() == 200:
+                existingWaveFiles.append(waveFile)
+            else:
+                nonExistingWaveFiles.append(waveFile)
+                existingWaveFiles = sorted(existingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
+                                if item[0].isdigit() else float('inf'), item))
+                nonExistingWaveFiles = sorted(nonExistingWaveFiles, key=lambda item: (int(item.partition(' ')[0])
+                                if item[0].isdigit() else float('inf'), item))
+                finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
 
     return render_template(
     'audiofiles.html',
     scannedFiles = pythonFiles,
-    results = finalResults)
+    results = finalResultsInterface)
 
 
 if __name__ == '__main__':
