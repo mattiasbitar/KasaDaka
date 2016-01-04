@@ -243,7 +243,9 @@ def audioReferences():
     nonExistingWaveFiles = []
     existingWaveFiles = []
     for waveFile in usedWaveFiles:
-        url = config.audioURLbase + waveFile
+        ## TODO: add support for languages, check files for every language
+        lang = 'en'
+        url = config.audioURLbase +"/"+lang+"/" waveFile
         if urllib.urlopen(url).getcode() == 200:
             existingWaveFiles.append(waveFile)
         else:
