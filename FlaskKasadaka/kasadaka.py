@@ -5,7 +5,8 @@ from getSparql import executeSparqlQuery
 
 import config
 import callhandler
-
+import glob
+import re
 
 app = Flask(__name__)
 @app.route('/')
@@ -222,6 +223,18 @@ def placeProductOffer():
     priceQuestionAudio = "placeProductOffer_price.wav",
     interfaceAudioDir = lang.audioInterfaceURL
     )
+
+
+@app.route('/audioreferences.html')
+def audioReferences():
+    pythonFiles = glob.glob('*.py')
+    results = []
+    wavFilePattern = re.compile("""([^\s"']+\.wav)""",re.I)
+    for pythonFile in pythonFiles:
+        text = open(pythonFile).read()
+        for match in wavFilePattern.findall(pythonFile):
+            results.append(match)
+    return pythonFiles
 
 
 if __name__ == '__main__':
