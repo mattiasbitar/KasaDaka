@@ -245,6 +245,7 @@ def audioReferences():
     usedWaveFiles = set(results)
 
     languages = getUsedLanguages()
+    print languages
     for lang in languages:
         nonExistingWaveFiles = []
         existingWaveFiles = []

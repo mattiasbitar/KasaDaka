@@ -37,12 +37,6 @@ def executeSparqlQuery(query, url = config.sparqlURL):
                 toAppend = toAppend.replace("-","%2D")
                 results[len(results)-1].append(toAppend)
 
-    for row in results:
-        line = ""
-        for entry in row:
-             line += entry + "\t"
-        print line
-
     return results
 
 
@@ -65,4 +59,4 @@ SELECT DISTINCT ?language   WHERE {
     for string in output:
         results.append(string[0].rsplit('/', 1)[-1])
 
-    return set(results)
+    return results
