@@ -65,4 +65,4 @@ SELECT DISTINCT ?language   WHERE {
     for string in output:
         results.append(string[0].rsplit('/', 1)[-1])
 
-    return results
+    return set(results)
