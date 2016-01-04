@@ -232,7 +232,7 @@ def audioReferences():
     wavFilePattern = re.compile("""([^\s"']+\.wav)""",re.I)
     for pythonFile in pythonFiles:
         text = open(pythonFile).read()
-        for match in wavFilePattern.findall(pythonFile):
+        for match in wavFilePattern.findall(text):
             results.append(match)
     return render_template(
     'audiofiles.html',
