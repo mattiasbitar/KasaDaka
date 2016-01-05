@@ -238,7 +238,7 @@ def audioReferences():
     pythonFiles = glob.glob('*.py')
     pythonFiles.extend(glob.glob('templates/*'))
     results = []
-    wavFilePattern = re.compile("""([^\s\\+"']+\.wav)""",re.I)
+    wavFilePattern = re.compile("""([^\s\\/+"']+\.wav)""",re.I)
     for pythonFile in pythonFiles:
         text = open(pythonFile).read()
         for match in wavFilePattern.findall(text):
