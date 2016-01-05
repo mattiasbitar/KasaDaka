@@ -263,7 +263,7 @@ def audioReferences():
         results.extend(string[0].rsplit(':', 1)[-1]+".wav")
         languages.append(string[0].rsplit('_', 1)[-1])
 
-
+    usedWaveFiles = set(results)
     for lang in languages:
         nonExistingWaveFiles = []
         existingWaveFiles = []
@@ -279,7 +279,7 @@ def audioReferences():
                 nonExistingWaveFiles = sorted(nonExistingWaveFiles)
         finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
-    usedWaveFiles = set(results)
+
     return render_template(
     'audiofiles.html',
     scannedFiles = pythonFiles,
