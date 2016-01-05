@@ -38,3 +38,6 @@ def executeSparqlQuery(query, url = config.sparqlURL):
                 results[len(results)-1].append(toAppend)
 
     return results
+
+def executeSparqlUpdate(query, url = config.sparqlURL):
+    return False

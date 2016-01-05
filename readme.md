@@ -156,3 +156,7 @@ create audio file storage
 installing tts
 
 sudo apt-get install flite
+
+
+
+In cleopatria, geef anonymous user rechten

@@ -1,7 +1,7 @@
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
-from getSparql import executeSparqlQuery
+from sparqlInterface import executeSparqlQuery, executeSparqlUpdate
 
 import config
 import callhandler
@@ -65,7 +65,7 @@ def requestProductOfferings():
     lang = config.LanguageVars(request.args)
 
 
-    #if the chosen product has been entered, show 20 results
+    #if the chosen product has been entered, show results
     if 'product' in request.args:
         choice = request.args['product']
 
@@ -91,8 +91,7 @@ def requestProductOfferings():
         #get currency
         ?offering radiomarche:currency ?currency.
         ?currency speakle:voicelabel_en ?currency_voicelabel
-        }
-        LIMIT 20"""
+        }"""
         query = lang.replaceVoicelabels(query)
 
         results = executeSparqlQuery(query)
@@ -112,8 +111,7 @@ def requestProductOfferings():
     SELECT DISTINCT ?product ?voicelabel_en  WHERE {
     ?product rdf:type	radiomarche:Product.
     ?product speakle:voicelabel_en ?voicelabel_en
-    }
-    LIMIT 9"""
+    }"""
     query = lang.replaceVoicelabels(query)
     choices = executeSparqlQuery(query)
     #add the url of this page to the links, so the user gets the results
@@ -185,35 +183,26 @@ def placeProductOffer():
             """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
             PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-            SELECT DISTINCT ?person ?voicelabel_en  WHERE {
-                     ?person  rdf:type radiomarche:Person  .
-                     ?person radiomarche:contact_fname ?fname .
-                     ?person radiomarche:contact_lname ?lname.
-                     ?person speakle:voicelabel_en ?voicelabel_en
-            }
-            LIMIT 10""")
+            SELECT DISTINCT ?product ?voicelabel_en  WHERE {
+            ?product rdf:type	radiomarche:Product.
+            ?product speakle:voicelabel_en ?voicelabel_en
+            }""")
     locationChoices = executeSparqlQuery(
             """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
-            PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-            SELECT DISTINCT ?person ?voicelabel_en  WHERE {
-                     ?person  rdf:type radiomarche:Person  .
-                     ?person radiomarche:contact_fname ?fname .
-                     ?person radiomarche:contact_lname ?lname.
-                     ?person speakle:voicelabel_en ?voicelabel_en
-            }
-            LIMIT 10""")
+    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+    PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+    SELECT DISTINCT ?zone ?voicelabel  WHERE {
+    ?zone rdf:type	radiomarche:Zone.
+	?zone speakle:voicelabel_en ?voicelabel
+    }""")
     currencyChoices = executeSparqlQuery(
             """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
-            PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-            SELECT DISTINCT ?person ?voicelabel_en  WHERE {
-                     ?person  rdf:type radiomarche:Person  .
-                     ?person radiomarche:contact_fname ?fname .
-                     ?person radiomarche:contact_lname ?lname.
-                     ?person speakle:voicelabel_en ?voicelabel_en
-            }
-            LIMIT 10""")
+    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+    PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+    SELECT DISTINCT ?currency ?voicelabel  WHERE {
+    ?currency rdf:type	radiomarche:Currency.
+	?currency speakle:voicelabel_en ?voicelabel
+    }""")
 
     return render_template(
     'placeProductOffer.vxml',
