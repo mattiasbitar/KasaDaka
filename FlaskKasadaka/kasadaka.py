@@ -1,7 +1,7 @@
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 
-from getSparql import executeSparqlQuery, getUsedLanguages
+from getSparql import executeSparqlQuery
 
 import config
 import callhandler
@@ -254,7 +254,7 @@ def audioReferences():
     SELECT DISTINCT  ?voicelabel  WHERE {
           ?voicelabel   rdfs:subPropertyOf speakle:voicelabel.
 
-      	
+
 
     }"""
     output = executeSparqlQuery(getLanguagesQuery)
