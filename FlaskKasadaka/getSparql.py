@@ -38,25 +38,3 @@ def executeSparqlQuery(query, url = config.sparqlURL):
                 results[len(results)-1].append(toAppend)
 
     return results
-
-
-def getUsedLanguages():
-    results = []
-    query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
-PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-PREFIX lexvo: <http://lexvo.org/ontology#>
-
-SELECT DISTINCT ?language   WHERE {
-      ?voicelabel   rdfs:subPropertyOf speakle:voicelabel.
-  	?voicelabel lexvo:language ?language
-
-
-}"""
-    output = executeSparqlQuery(query)
-    #get the language code behind the last slash
-    for string in output:
-        results.append(string[0].rsplit('/', 1)[-1])
-
-    return results
