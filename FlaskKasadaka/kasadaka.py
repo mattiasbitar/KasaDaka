@@ -28,7 +28,7 @@ def testing():
         #check the highest current offering in database
         if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
             highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
-    return "" + highestCurrentOfferingNumber
+    return str(highestCurrentOfferingNumber)
 
 @app.route('/main.vxml')
 def main():
