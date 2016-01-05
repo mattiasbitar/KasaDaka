@@ -16,13 +16,13 @@
 <audio src="{{ questionAudio }}"/>
 {% for option in options %}
     {#for..#}
-    <audio src="{{ audioDir ~ option[2] ~ "interface/preoption.wav" }}"/>
+    <audio src="{{ audioDir ~ option[2] ~ "/interface/preoption.wav" }}"/>
     {#option#}
     <audio src="{{ option[1] }}"/>
     {#press#}
-    <audio src="{{ audioDir ~ option[2] ~ "interface/postoption.wav" }}"/>
+    <audio src="{{ audioDir ~ option[2] ~ "/interface/postoption.wav" }}"/>
     {#number#}
-    <audio src="{{ audioDir ~ option[2] ~ "interface/" ~ loop.index ~ ".wav" }}"/>
+    <audio src="{{ audioDir ~ option[2] ~ "/interface/" ~ loop.index ~ ".wav" }}"/>
 {% endfor %}
 </prompt>
 
