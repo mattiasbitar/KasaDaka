@@ -32,7 +32,7 @@ def main():
         questionAudio = "mainMenuQuestion.wav",
         options = options)
     else:
-        give your language
+        #give your language
         languagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
