@@ -12,16 +12,23 @@ import urllib
 app = Flask(__name__)
 @app.route('/')
 def index():
-    q = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    return 'This is the Kasadaka Vxml generator'
+
+
+@app.route('/testing')
+def testing():
+    allOfferings = executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-	INSERT  DATA
-    { <http://purl.org/collections/w4ra/radiomarche/zone_Koula> speakle:voicelabel_en  <http://127.0.0.1/audio/Koula_en1234.wav>. }"""
-
-    print executeSparqlUpdate(q)
-
-
-    return 'This is the Kasadaka Vxml generator'
+    SELECT DISTINCT ?offering   WHERE {
+    ?offering rdf:type	radiomarche:Offering.
+    }""")
+    highestCurrentOfferingNumber = 0
+    for offering in allOfferings:
+        #check the highest current offering in database
+        if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
+            highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
+    return highestCurrentOfferingNumber
 
 @app.route('/main.vxml')
 def main():
@@ -72,7 +79,6 @@ def main():
 def requestProductOfferings():
     #process the language
     lang = config.LanguageVars(request.args)
-
 
     #if the chosen product has been entered, show results
     if 'product' in request.args:
@@ -150,6 +156,19 @@ def placeProductOffer():
         currency = request.args['currency']
         quantity = request.args['quantity']
         confirm = request.args['confrim']
+
+        #determine next number for offering (add to the already existing offerings)
+        allOfferings = executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+        PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+        SELECT DISTINCT ?offering   WHERE {
+        ?offering rdf:type	radiomarche:Offering.
+        }""")
+        highestCurrentOfferingNumber = 0
+        for offering in allOfferings:
+            #check the highest current offering in database
+            if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
+                highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
 
         #TODO keuze in query maken
         #TODO confirm eerst doen
