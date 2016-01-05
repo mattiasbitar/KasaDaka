@@ -46,17 +46,16 @@ def main():
         languages = executeSparqlQuery(languagesQuery)
         for language in languages:
             language.append(config.audioURLbase + language[0].rsplit('_', 1)[-1] + "/" + language[0].rsplit('/', 1)[-1] + ".wav")
-            language[0] = "main.vxml?lang=" + language[0]
+            language[0] = "main.vxml?lang=" + language[0].rsplit('_', 1)[-1]
 
-        print languages
-        return ""
-        # return render_template(
-        # 'menu.vxml',
-        # options = languages,
-        # interfaceAudioDir = config.LanguageVars.audioInterfaceURL,
-        # questionAudio = "chooseLanguage.wav"
-        #
-        # )
+
+        return render_template(
+        'menu.vxml',
+        options = languages,
+        interfaceAudioDir = config.LanguageVars.audioInterfaceURL,
+        questionAudio = "chooseLanguage.wav"
+
+        )
 
 
 @app.route('/requestProductOfferings.vxml')
