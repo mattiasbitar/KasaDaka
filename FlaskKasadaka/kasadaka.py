@@ -259,7 +259,7 @@ def audioReferences():
                 nonExistingWaveFiles.append(waveFile)
                 existingWaveFiles = sorted(existingWaveFiles)
                 nonExistingWaveFiles = sorted(nonExistingWaveFiles)
-                finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
+        finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
 
     return render_template(
