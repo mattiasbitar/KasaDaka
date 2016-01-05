@@ -43,6 +43,6 @@ def executeSparqlUpdate(query, url = config.sparqlURL):
     sucessResult = "<boolean>true</boolean>"
     if sucessResult in requestReturned:
         return True
-    else
+    else:
         print "ERROR: SPARQL UPDATE FAILED! Check your query!"
         return False
