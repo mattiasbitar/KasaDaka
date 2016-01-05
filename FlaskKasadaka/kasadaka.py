@@ -259,6 +259,7 @@ def audioReferences():
     }"""
     output = executeSparqlQuery(getLanguagesQuery)
     #get the language code behind the last slash
+    print output
     for string in output:
         results.extend(string[0].rsplit(':', 1)[-1]+".wav")
         languages.append(string[0].rsplit('_', 1)[-1])
