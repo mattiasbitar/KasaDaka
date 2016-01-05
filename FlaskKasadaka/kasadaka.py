@@ -27,7 +27,7 @@ def testing():
         #check the highest current offering in database
         if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
             highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
-    return dateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 @app.route('/main.vxml')
 def main():
