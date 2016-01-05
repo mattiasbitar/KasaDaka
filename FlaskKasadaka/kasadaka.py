@@ -43,7 +43,7 @@ def main():
               ?voicelabel   rdfs:subPropertyOf speakle:voicelabel.
 
         }"""
-        languages = executeSparqlQuery(languageQuery)
+        languages = executeSparqlQuery(languagesQuery)
         print languages
         return ""
         # return render_template(
