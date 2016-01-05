@@ -9,14 +9,10 @@ import config
 def executeSparqlQuery(query, url = config.sparqlURL):
     ET.register_namespace("","http://www.w3.org/2005/sparql-results#")
 
-    #query = urllib.quote("SELECT * WHERE {  ?sub ?pred ?obj . } LIMIT 10")
-
     queryHtmlFormat = urllib.quote(query)
-    #requestURL = "http://cliopatria.swi-prolog.org/sparql/?query=" + query
-    requestURL = url + queryHtmlFormat
+    requestURL = url + "?query=" + queryHtmlFormat
     #print "requesting: "+requestURL
     resultXML = urllib2.urlopen(requestURL).read()
-    #XML parsing proberen
     root = ET.fromstring(resultXML)
 
     head = root.find("{http://www.w3.org/2005/sparql-results#}head")
@@ -40,4 +36,13 @@ def executeSparqlQuery(query, url = config.sparqlURL):
     return results
 
 def executeSparqlUpdate(query, url = config.sparqlURL):
-    return False
+
+    queryHtmlFormat = urllib.quote(query)
+    requestURL = url + "update?update=" + queryHtmlFormat
+    requestReturned = urllib2.urlopen(requestURL).read()
+    sucessResult = "<boolean>true</boolean>"
+    if sucessResult in requestReturned:
+        return True
+    else
+        print "ERROR: SPARQL UPDATE FAILED! Check your query!"
+        return False

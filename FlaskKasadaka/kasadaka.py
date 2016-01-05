@@ -12,6 +12,15 @@ import urllib
 app = Flask(__name__)
 @app.route('/')
 def index():
+    q = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+    PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+	INSERT  DATA
+    { <http://purl.org/collections/w4ra/radiomarche/zone_Koula> speakle:voicelabel_en  <http://127.0.0.1/audio/Koula_en1234.wav>. }"""
+
+    print executeSparqlUpdate(q)
+
+
     return 'This is the Kasadaka Vxml generator'
 
 @app.route('/main.vxml')
@@ -132,7 +141,6 @@ def placeProductOffer():
     #process the language
     lang = config.LanguageVars(request.args)
 
-
     #if all the nessecary variables are set, update data in store
     if 'user' in request.args and 'product' in request.args and 'location' in request.args and 'price' in request.args and 'currency' in request.args and 'quantity' in request.args and 'confirm' in request.args:
         user = request.args['user']
@@ -176,8 +184,7 @@ def placeProductOffer():
                  ?person radiomarche:contact_fname ?fname .
                  ?person radiomarche:contact_lname ?lname.
                  ?person speakle:voicelabel_en ?voicelabel_en
-        }
-        LIMIT 10""")
+        }""")
 
     productChoices = executeSparqlQuery(
             """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
