@@ -33,7 +33,7 @@ def main():
         options = options)
     # else:
         #give your language
-        # languageQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        # languagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         #     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         #     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
         #     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
@@ -242,7 +242,7 @@ def audioReferences():
                 results.append(match)
     #remove duplicates
     results.extend(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
-    usedWaveFiles = set(results)
+
 
     languages = []
     getLanguagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -260,6 +260,7 @@ def audioReferences():
     output = executeSparqlQuery(getLanguagesQuery)
     #get the language code behind the last slash
     for string in output:
+        results.extend(string[0].rsplit(':', 1)[-1]+".wav")
         languages.append(string[0].rsplit('_', 1)[-1])
 
 
@@ -278,7 +279,7 @@ def audioReferences():
                 nonExistingWaveFiles = sorted(nonExistingWaveFiles)
         finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
-
+    usedWaveFiles = set(results)
     return render_template(
     'audiofiles.html',
     scannedFiles = pythonFiles,
