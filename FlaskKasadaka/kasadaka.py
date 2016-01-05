@@ -16,7 +16,7 @@ def index():
 
 @app.route('/main.vxml')
 def main():
-    # if 'lang' in request.args:
+    if 'lang' in request.args:
         lang = config.LanguageVars(request.args)
         #list of options in initial menu: link to file, and audio description of the choice
         options = [
@@ -31,26 +31,27 @@ def main():
         welcomeAudio = 'welcome.wav',
         questionAudio = "mainMenuQuestion.wav",
         options = options)
-    # else:
-        #give your language
-        # languagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        #     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        #     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
-        #     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-        #
-        #     SELECT DISTINCT ?voicelabel   WHERE {
-        #     ?voicelabel   rdfs:subPropertyOf speakle:voicelabel
-        #
-        #     }
-        #     LIMIT 9"""
-        # languages = executeSparqlQuery(languageQuery)
-        #
+    else:
+        give your language
+        languagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+        PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+        PREFIX lexvo: <http://lexvo.org/ontology#>
+
+        SELECT DISTINCT  ?voicelabel  WHERE {
+              ?voicelabel   rdfs:subPropertyOf speakle:voicelabel.
+
+        }"""
+        languages = executeSparqlQuery(languageQuery)
+        print languages
+        return ""
         # return render_template(
         # 'menu.vxml',
         # options = languages,
         # interfaceAudioDir = config.LanguageVars.audioInterfaceURL,
         # questionAudio = "chooseLanguage.wav"
-
+        #
         # )
 
 
@@ -259,7 +260,6 @@ def audioReferences():
     }"""
     output = executeSparqlQuery(getLanguagesQuery)
     #get the language code behind the last slash
-    print output
     for string in output:
         results.append(string[0].rsplit('/', 1)[-1]+".wav")
         languages.append(string[0].rsplit('_', 1)[-1])
