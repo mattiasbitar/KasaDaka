@@ -1,8 +1,7 @@
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-
 from sparqlInterface import executeSparqlQuery, executeSparqlUpdate
-
+from datetime import datetime
 import config
 import callhandler
 import glob
@@ -28,7 +27,7 @@ def testing():
         #check the highest current offering in database
         if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
             highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
-    return str(highestCurrentOfferingNumber)
+    return dateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 @app.route('/main.vxml')
 def main():
@@ -169,7 +168,7 @@ def placeProductOffer():
             #check the highest current offering in database
             if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
                 highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
-
+        dateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         #TODO keuze in query maken
         #TODO confirm eerst doen
         results = executeSparqlQuery(
