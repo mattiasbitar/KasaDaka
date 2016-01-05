@@ -7,22 +7,22 @@
 {% block optionalMessage %}
 {% endblock %}
 
-{% macro createMenu(menuID,interfaceAudioDir,questionAudio,options) %}
+{% macro createLanguageMenu(menuID,interfaceAudioDir,questionAudio,options) %}
 {# TODO: what if there are more than 9 options? Paginate?!  #}
 
 <form  id="{{ menuID }}">
-<field name="question1">
+<field name="language">
 <prompt>
-<audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
+<audio src="{{ questionAudio }}"/>
 {% for option in options %}
     {#for..#}
-    <audio src="{{ interfaceAudioDir ~ "preoption.wav" }}"/>
+    <audio src="{{ audioDir ~ option[2] ~ "interface/preoption.wav" }}"/>
     {#option#}
     <audio src="{{ option[1] }}"/>
     {#press#}
-    <audio src="{{ interfaceAudioDir ~ "postoption.wav" }}"/>
+    <audio src="{{ audioDir ~ option[2] ~ "interface/postoption.wav" }}"/>
     {#number#}
-    <audio src="{{ interfaceAudioDir ~  loop.index ~ ".wav" }}"/>
+    <audio src="{{ audioDir ~ option[2] ~ "interface/" ~ loop.index ~ ".wav" }}"/>
 {% endfor %}
 </prompt>
 
@@ -58,7 +58,7 @@
 </form>
 
 {% endmacro %}
-{{ createMenu("menu",interfaceAudioDir,questionAudio,options) }}
+{{ createLanguageMenu("menu",audioDir,questionAudio,options) }}
 
 {% endblock %}
 {% endblock %}

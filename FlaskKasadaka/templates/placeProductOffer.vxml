@@ -27,7 +27,7 @@
     {#press#}
     <audio src="{{ interfaceAudioDir ~ "postoption.wav" }}"/>
     {#number#}
-    <audio src="{{ interfaceAudioDir ~ "dtmf" ~ loop.index ~ ".wav" }}"/>
+    <audio src="{{ interfaceAudioDir  ~ loop.index ~ ".wav" }}"/>
 {% endfor %}
 </prompt>
 
