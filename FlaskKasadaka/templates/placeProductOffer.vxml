@@ -1,20 +1,21 @@
 {% extends 'vxmlLayout.vxml' %}
 
 {% macro enterDtmfValue(fieldName,minInputLength,maxInputLength,interfaceAudioDir,questionAudio,goto) %}
+<form id="{{ fieldName }}_form">
   <field name="{{ fieldName }}" type="digits?minlength={{ minInputLength }};maxlength={{ maxInputLength }}">
     <prompt>
     <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
     </prompt>
 
     <filled>
-     <goto expr="{{ goto }}"/>
+     <goto next="#{{ goto }}"/>
     </filled>
   </field>
-
+</form>
 {% endmacro %}
 
 {% macro createLocalMenu(menuID,interfaceAudioDir,questionAudio,options,goto) %}
-
+<form id="{{menuID}}_form">
 <field name="{{menuID}}">
 <prompt>
 <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
@@ -31,7 +32,7 @@
 </prompt>
 
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
-      <rule id="MYRULE" scope = "public">
+      <rule id="MYRULE" scope = "dialog">
         <one-of>
           {% for option in options %}
             <item>{{ loop.index }}</item>
@@ -56,27 +57,30 @@
 
     <else/>
     </if>
-    <goto expr="{{ goto }}"/>
+    <goto next="#{{ goto }}"/>
   </filled>
 
 
 </field>
-
+</form>
 {% endmacro %}
 
 
 
 {% block content %}
 <form>
-<goto expr="person"/>
-{{ createLocalMenu("person",interfaceAudioDir,personQuestionAudio,personOptions,"product") }}
-{{ createLocalMenu("product",interfaceAudioDir,productQuestionAudio,productOptions,"quantity") }}
-{{ enterDtmfValue("quantity",1,9,interfaceAudioDir,quantityQuestionAudio,"location") }}
-{{ createLocalMenu("location",interfaceAudioDir,locationQuestionAudio,locationOptions,"currency") }}
-{{ createLocalMenu("currency",interfaceAudioDir,currencyQuestionAudio,currencyOptions,"price") }}
+<block>
+<goto next="#person_form"/>
+</block>
+</form>
+{{ createLocalMenu("person",interfaceAudioDir,personQuestionAudio,personOptions,"product_form") }}
+{{ createLocalMenu("product",interfaceAudioDir,productQuestionAudio,productOptions,"quantity_form") }}
+{{ enterDtmfValue("quantity",1,9,interfaceAudioDir,quantityQuestionAudio,"location_form") }}
+{{ createLocalMenu("location",interfaceAudioDir,locationQuestionAudio,locationOptions,"currency_form") }}
+{{ createLocalMenu("currency",interfaceAudioDir,currencyQuestionAudio,currencyOptions,"price_form") }}
 {{ enterDtmfValue("price",1,9,interfaceAudioDir,priceQuestionAudio,"submit") }}
-
-<block name="submit">
+<form id="submit">
+<block>
 <submit next="placeProductOffer.vxml" method="get"/>
 </block>
 </form>
