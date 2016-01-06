@@ -3,7 +3,7 @@
 <form>
 <block>
 <prompt>
-<audio src="{{ messageaudio }}"/>
+<audio src="{{ messageAudio }}"/>
 </prompt>
 <goto next="{{ redirect }}"/>
 </block>

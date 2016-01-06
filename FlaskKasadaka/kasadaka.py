@@ -186,9 +186,18 @@ def placeProductOffer():
         radiomarche:offering_xxxxx radiomarche:zone <"""+ location +"""> .
         }"""
         insertQuery = insertQuery.replace("offering_xxxxx","offering_"+offeringNumber)
-        print insertQuery
+        result = executeSparqlUpdate(insertQuery)
         #TODO doe een message dat alles gelukt is en terug naar main menu
-        return "?!?!?"
+        if result:
+            return render_template(
+                'message.vxml',
+                redirect ="main.vxml?lang=" + lang.language,
+                messageAudio = 'placeProductOffer_success.wav')
+        else:
+            return render_template(
+                'message.vxml',
+                redirect ="main.vxml?lang=" + lang.language,
+                messageAudio = 'error.wav')
 
 
     #if no choice was made, present choice menu
