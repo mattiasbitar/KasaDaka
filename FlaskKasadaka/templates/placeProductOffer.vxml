@@ -47,10 +47,10 @@
     {% for option in options %}
       {% if loop.index == 1 %}
       <if cond="{{menuID}}_menu == '{{ loop.index }}'">
-      <var name="{{menuID}}" expr="{{option[0]}}"/>
+      <var name="{{menuID}}" expr="'{{option[0]}}'"/>
       {% else %}
       <elseif cond="{{menuID}}_menu == '{{ loop.index }}'" />
-      <var name="{{menuID}}" expr="{{option[0]}}"/>
+      <var name="{{menuID}}" expr="'{{option[0]}}'"/>
       {% endif %}
     {% endfor %}
 
