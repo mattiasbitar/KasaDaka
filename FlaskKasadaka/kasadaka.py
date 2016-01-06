@@ -311,7 +311,7 @@ def audioReferences():
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT DISTINCT ?subject ?voicelabel_en  WHERE {
+    SELECT DISTINCT  ?voicelabel_en  WHERE {
     ?subject rdf:type	rdfs:Resource .
     ?subject speakle:voicelabel_en ?voicelabel_en .
     }"""
