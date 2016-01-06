@@ -2,12 +2,13 @@
 
 {% macro enterDtmfValue(fieldName,minInputLength,maxInputLength,interfaceAudioDir,questionAudio,goto) %}
 <form id="{{ fieldName }}_form">
-  <field name="{{ fieldName }}" type="digits?minlength={{ minInputLength }};maxlength={{ maxInputLength }}">
+  <field name="{{ fieldName }}_field" type="digits?minlength={{ minInputLength }};maxlength={{ maxInputLength }}">
     <prompt>
     <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
     </prompt>
 
     <filled>
+    <assign name="{{fieldName}}" expr="{{ fieldName }}_field"/>
      <goto next="#{{ goto }}_form"/>
     </filled>
   </field>
@@ -47,10 +48,10 @@
     {% for option in options %}
       {% if loop.index == 1 %}
       <if cond="{{menuID}}_menu == '{{ loop.index }}'">
-      <var name="{{menuID}}" expr="'{{option[0]}}'"/>
+      <assign name="{{menuID}}" expr="'{{option[0]}}'"/>
       {% else %}
       <elseif cond="{{menuID}}_menu == '{{ loop.index }}'" />
-      <var name="{{menuID}}" expr="'{{option[0]}}'"/>
+      <assign name="{{menuID}}" expr="'{{option[0]}}'"/>
       {% endif %}
     {% endfor %}
 
@@ -73,6 +74,7 @@
 <goto next="#person_form"/>
 </block>
 </form>
+<var name="person" expr="'null'"/>
 {{ createLocalMenu("person",interfaceAudioDir,personQuestionAudio,personOptions,"product") }}
 {{ createLocalMenu("product",interfaceAudioDir,productQuestionAudio,productOptions,"quantity") }}
 {{ enterDtmfValue("quantity",1,9,interfaceAudioDir,quantityQuestionAudio,"location") }}

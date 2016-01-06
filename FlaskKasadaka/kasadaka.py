@@ -144,6 +144,7 @@ def requestProductOfferings():
 def placeProductOffer():
 #for this function, a lot of things are defined in the template 'placeProductOffer.vxml'. You will need to edit this file as well.
     #process the language
+
     lang = config.LanguageVars(request.args)
 
     #if all the nessecary variables are set, update data in store
