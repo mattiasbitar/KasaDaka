@@ -184,7 +184,7 @@ def placeProductOffer():
         radiomarche:offering_xxxxx radiomarche:quantity  <http://purl.org/collections/w4ra/radiomarche/quantity-"""+ quantity +"""> .
         radiomarche:offering_xxxxx radiomarche:ts_date_entered  '"""+ dateTime +"""' .
         }"""
-        insertQuery.replace("offering_xxxxx","offering_"+offeringNumber)
+        insertQuery = insertQuery.replace("offering_xxxxx","offering_"+offeringNumber)
         print insertQuery
         #TODO doe een message dat alles gelukt is en terug naar main menu
         return "?!?!?"
