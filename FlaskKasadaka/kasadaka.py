@@ -316,6 +316,7 @@ def audioReferences():
     ?subject speakle:voicelabel_en ?voicelabel_en .
     }"""
     subjectsWithVoicelabel = executeSparqlQuery(voicelabelQuery)
+    subjectsWithVoicelabel = sorted(subjectsWithVoicelabel)
 
 
     for lang in languages:
