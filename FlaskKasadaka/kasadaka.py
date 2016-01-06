@@ -311,7 +311,7 @@ def audioReferences():
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    SELECT DISTINCT  ?voicelabel_en  WHERE {
+    SELECT DISTINCT ?subject ?voicelabel_en  WHERE {
     ?subject rdf:type	rdfs:Resource .
     ?subject speakle:voicelabel_en ?voicelabel_en .
     }"""
@@ -326,9 +326,9 @@ def audioReferences():
 
             url = subject[1]
             if urllib.urlopen(url).getcode() == 200:
-                sparqlExistingWaveFiles.append(subject[0])
+                sparqlExistingWaveFiles.append(subject[1])
             else:
-                sparqlNonExistingWaveFiles.append(subject[0])
+                sparqlNonExistingWaveFiles.append(subject[1])
                 sparqlExistingWaveFiles = sorted(sparqlExistingWaveFiles)
                 sparqlNonExistingWaveFiles = sorted(sparqlNonExistingWaveFiles)
         finalResultsSparql.append([lang,sparqlExistingWaveFiles,sparqlNonExistingWaveFiles])
