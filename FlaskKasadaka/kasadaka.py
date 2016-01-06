@@ -308,6 +308,18 @@ def audioReferences():
                 nonExistingWaveFiles = sorted(nonExistingWaveFiles)
         finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
+    #check the DB for subjects without a voicelabel
+    voicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+    PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT DISTINCT ?subject   WHERE {
+    ?subject rdf:type	rdfs:Resource .
+    FILTER(NOT EXISTS {?subject speakle:voicelabel_en ?voicelabel_en .})
+    }"""
+
+
+
 
     return render_template(
     'audiofiles.html',

@@ -11,7 +11,7 @@
 {# TODO: what if there are more than 9 options? Paginate?!  #}
 
 <form  id="{{ menuID }}">
-<field name="language">
+<field name="question1">
 <prompt>
 <audio src="{{ questionAudio }}"/>
 {% for option in options %}
