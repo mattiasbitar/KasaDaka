@@ -20,8 +20,7 @@ def main():
         lang = config.LanguageVars(request.args)
         #list of options in initial menu: link to file, and audio description of the choice
         options = [
-                ['requestProductOfferings.vxml?lang='+lang.language,    lang.audioInterfaceURL+'requestProductOfferings.wav'],
-                ['placeProductOffer.vxml?lang='+lang.language,   lang.audioInterfaceURL+'placeProductOffer.wav']
+                ['lookupFertilizer.vxml?lang='+lang.language,    lang.audioInterfaceURL+'lookupFertilizer.wav']
                 ]
 
 
@@ -57,6 +56,62 @@ def main():
         questionAudio = config.audioURLbase+config.defaultLanguage+"/interface/chooseLanguage.wav"
 
         )
+
+
+
+@app.route('/lookupFertilizer.vxml')
+def lookupFertilizer():
+    #process the language
+    lang = config.LanguageVars(request.args)
+
+    #if the chosen product has been entered, show results
+    if 'product' in request.args:
+        choice = request.args['product']
+
+        query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+        PREFIX fa: <http://example.org/fertapp/>
+
+        SELECT DISTINCT ?voicelabel_en  WHERE {
+            <"""+choice+ """> fa:has_fertilizer ?fert.
+            ?fert speakle:voicelabel_en ?voicelabel_en
+            }
+        """
+        query = lang.replaceVoicelabels(query)
+
+        results = executeSparqlQuery(query)
+
+        return render_template(
+            'result.vxml',
+            interfaceAudioDir = lang.audioInterfaceURL,
+            messageAudio = 'presentFertilizer.wav',
+            redirect = 'main.vxml?lang='+lang.language,
+            results = results)
+
+
+    #if no choice was made, offer choices of products to get offerings from
+    query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+    PREFIX fa: <http://example.org/fertapp/>
+
+    SELECT DISTINCT ?product ?voicelabel_en  WHERE {
+    ?product rdf:type fa:crop.
+    ?product speakle:voicelabel_en ?voicelabel_en
+    }"""
+    query = lang.replaceVoicelabels(query)
+    choices = executeSparqlQuery(query)
+    #add the url of this page to the links, so the user gets the results
+    #also keep the language
+    for choice in choices:
+        choice[0] = 'lookupFertilizer.vxml?lang='+lang.language+'&amp;product=' + choice[0]
+
+    return render_template(
+    'menu.vxml',
+    options = choices,
+    interfaceAudioDir = lang.audioInterfaceURL,
+    questionAudio = "chooseYourProduct.wav"
+    )
+
 
 
 @app.route('/requestProductOfferings.vxml')
