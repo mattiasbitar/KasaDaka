@@ -192,12 +192,14 @@ def placeProductOffer():
             return render_template(
                 'message.vxml',
                 redirect ="main.vxml?lang=" + lang.language,
-                messageAudio = 'placeProductOffer_success.wav')
+                messageAudio = 'placeProductOffer_success.wav',
+                interfaceAudioDir = lang.audioInterfaceURL)
         else:
             return render_template(
                 'message.vxml',
                 redirect ="main.vxml?lang=" + lang.language,
-                messageAudio = 'error.wav')
+                messageAudio = 'error.wav',
+                interfaceAudioDir = lang.audioInterfaceURL)
 
 
     #if no choice was made, present choice menu
