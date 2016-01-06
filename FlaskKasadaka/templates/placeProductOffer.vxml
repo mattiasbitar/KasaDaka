@@ -16,7 +16,7 @@
 
 {% macro createLocalMenu(menuID,interfaceAudioDir,questionAudio,options,goto) %}
 <form id="{{menuID}}_form">
-<field name="{{menuID}}">
+<field name="{{menuID}}_menu">
 <prompt>
 <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
 {% for option in options %}
@@ -46,11 +46,11 @@
 <filled>
     {% for option in options %}
       {% if loop.index == 1 %}
-      <if cond="{{menuID}} == '{{ loop.index }}'">
-      <assign name="{{menuID}}" expr="{{option[0]}}"/>
+      <if cond="{{menuID}}_menu == '{{ loop.index }}'">
+      <var name="{{menuID}}" expr="{{option[0]}}"/>
       {% else %}
-      <elseif cond="{{menuID}} == '{{ loop.index }}'" />
-      <assign name="{{menuID}}" expr="{{option[0]}}"/>
+      <elseif cond="{{menuID}}_menu == '{{ loop.index }}'" />
+      <var name="{{menuID}}" expr="{{option[0]}}"/>
       {% endif %}
     {% endfor %}
 
