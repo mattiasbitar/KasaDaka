@@ -60,7 +60,7 @@ def main():
         }"""
         languages = executeSparqlQuery(languagesQuery)
         for language in languages:
-            language.append(config.audioURLbase +"interface/"+ language[0].rsplit('_', 1)[-1] + "/" + language[0].rsplit('/', 1)[-1] + ".wav")
+            language.append(config.audioURLbase + language[0].rsplit('_', 1)[-1] + "/interface/" + language[0].rsplit('/', 1)[-1] + ".wav")
             language.append(language[0].rsplit('_', 1)[-1])
             language[0] = "main.vxml?lang=" + language[0].rsplit('_', 1)[-1]
 
