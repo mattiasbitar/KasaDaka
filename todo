@@ -1,7 +1,7 @@
 todo:
 
-posten product offer fixen
-
+confirm posten voor het posten zelf
+langer wachten op input bij menu's, werken boven 9 getallen wel?
 toevoegen no results als er geen resultaten zijn
 
 voice inspreek frontend maken
@@ -14,3 +14,14 @@ Known issues:
 
 Further testing:
 more than 9 results in many situations
+
+
+
+FINALISING:
+clean up github
+run flask from apache2
+make sure asterisk and swipl run in service
+check documentation to set up
+write documentation of python interface
+
+write paper

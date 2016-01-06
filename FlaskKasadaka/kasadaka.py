@@ -14,21 +14,6 @@ def index():
     return 'This is the Kasadaka Vxml generator'
 
 
-@app.route('/testing')
-def testing():
-    allOfferings = executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
-    PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-    SELECT DISTINCT ?offering   WHERE {
-    ?offering rdf:type	radiomarche:Offering.
-    }""")
-    highestCurrentOfferingNumber = 0
-    for offering in allOfferings:
-        #check the highest current offering in database
-        if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
-            highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
 @app.route('/main.vxml')
 def main():
     if 'lang' in request.args:
@@ -260,19 +245,19 @@ def placeProductOffer():
 @app.route('/audioreferences.html')
 def audioReferences():
     finalResultsInterface = []
-
+    finalResultsSparql = []
     pythonFiles = glob.glob('*.py')
     pythonFiles.extend(glob.glob('templates/*'))
-    results = []
+    resultsInterface = []
     wavFilePattern = re.compile("""([^\s\\/+"']+\.wav)""",re.I)
     for pythonFile in pythonFiles:
         text = open(pythonFile).read()
         for match in wavFilePattern.findall(text):
             #ignore match on regex above
             if match != "\.wav":
-                results.append(match)
+                resultsInterface.append(match)
     #remove duplicates
-    results.extend(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
+    resultsInterface.extend(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
 
 
     languages = []
@@ -288,18 +273,19 @@ def audioReferences():
 
 
     }"""
-    output = executeSparqlQuery(getLanguagesQuery)
+    outputGetLanguagesQuery = executeSparqlQuery(getLanguagesQuery)
     #get the language code behind the last slash
-    for string in output:
-        results.append(string[0].rsplit('/', 1)[-1]+".wav")
+    for string in outputGetLanguagesQuery:
+        #also add the language itself to choose language
+        resultsInterface.append(string[0].rsplit('/', 1)[-1]+".wav")
+        #add the langauges
         languages.append(string[0].rsplit('_', 1)[-1])
 
-    usedWaveFiles = set(results)
+    usedWaveFiles = set(resultsInterface)
     for lang in languages:
         nonExistingWaveFiles = []
         existingWaveFiles = []
         for waveFile in usedWaveFiles:
-            ## TODO: add support for languages, check files for every language
 
             url = config.audioURLbase +"/"+lang+"/interface/"+ waveFile
             if urllib.urlopen(url).getcode() == 200:
@@ -311,7 +297,7 @@ def audioReferences():
         finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
     #check the DB for subjects without a voicelabel
-    voicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    noVoicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -319,14 +305,41 @@ def audioReferences():
     ?subject rdf:type	rdfs:Resource .
     FILTER(NOT EXISTS {?subject speakle:voicelabel_en ?voicelabel_en .})
     }"""
+    subjectsWithoutVoicelabel = executeSparqlQuery(noVoicelabelQuery)
+    #check the DB for subjects with a voicelabel, to check whether it exists or not
+    voicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
+    PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
+	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT DISTINCT ?subject ?voicelabel_en  WHERE {
+    ?subject rdf:type	rdfs:Resource .
+    ?subject speakle:voicelabel_en ?voicelabel_en .
+    }"""
+    subjectsWithVoicelabel = executeSparqlQuery(voicelabelQuery)
 
+
+    for lang in languages:
+        sparqlNonExistingWaveFiles = []
+        sparqlExistingWaveFiles = []
+        for subject in subjectsWithVoicelabel:
+
+            url = subject[1]
+            if urllib.urlopen(url).getcode() == 200:
+                sparqlExistingWaveFiles.append(subject[0])
+            else:
+                sparqlNonExistingWaveFiles.append(subject[0])
+                sparqlExistingWaveFiles = sorted(sparqlExistingWaveFiles)
+                sparqlNonExistingWaveFiles = sorted(sparqlNonExistingWaveFiles)
+        finalResultsSparql.append([lang,sparqlExistingWaveFiles,sparqlNonExistingWaveFiles])
 
 
 
     return render_template(
     'audiofiles.html',
     scannedFiles = pythonFiles,
-    results = finalResultsInterface)
+    interfaceResults = finalResultsInterface,
+    subjectsWithoutVoicelabel = subjectsWithoutVoicelabel,
+    sparqlResults = finalResultsSparql)
 
 
 if __name__ == '__main__':

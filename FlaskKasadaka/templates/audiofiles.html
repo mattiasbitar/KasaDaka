@@ -17,7 +17,7 @@
 </p>
 
 
-    {% for language in results %}
+    {% for language in finalResultsInterface %}
       <p>
         <b>Language: {{language[0]}}</b><br/>
         Existing Wave files:</br>
@@ -35,5 +35,16 @@
       </ul>
     </p>
     {% endfor %}
+
+
+
+    <p>
+      These subjects do not have a voicelabel:
+      <ul>
+      {% for subject in subjectsWithoutVoicelabel %}
+        <li>{{ subject[0] }}</li>
+      {% endfor %}
+    </ul>
+    </p>
 </body>
 </html>
