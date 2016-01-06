@@ -252,7 +252,8 @@ def placeProductOffer():
     currencyQuestionAudio = "placeProductOffer_currency.wav",
     quantityQuestionAudio = "placeProductOffer_quantity.wav",
     priceQuestionAudio = "placeProductOffer_price.wav",
-    interfaceAudioDir = lang.audioInterfaceURL
+    interfaceAudioDir = lang.audioInterfaceURL,
+    language = lang.language
     )
 
 
