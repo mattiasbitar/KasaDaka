@@ -7,14 +7,13 @@
     </prompt>
 
     <filled>
-{#      <goto next="{{ goto }}"/> #}
+     <goto expr="{{ goto }}"/>
     </filled>
   </field>
 
 {% endmacro %}
 
 {% macro createLocalMenu(menuID,interfaceAudioDir,questionAudio,options,goto) %}
-{# TODO: what if there are more than 9 options? Paginate?!  #}
 
 <field name="{{menuID}}">
 <prompt>
@@ -31,14 +30,35 @@
 {% endfor %}
 </prompt>
 
+<grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
+      <rule id="MYRULE" scope = "public">
+        <one-of>
+          {% for option in options %}
+            <item>{{ loop.index }}</item>
+          {% endfor %}
+        </one-of>
+       </rule>
+     </grammar>
 
 
-{% for option in options %}
-    <option dtmf="{{ loop.index }}" value="{{option[0]}}"/>
-{% endfor %}
+
 <filled>
-{# <goto next="{{ goto }}"/> #}
-</filled>
+    {% for option in options %}
+      {% if loop.index == 1 %}
+      <if cond="{{menuID}} == '{{ loop.index }}'">
+      <assign name="{{menuID}}" expr="{{option[0]}}"/>
+      {% else %}
+      <elseif cond="{{menuID}} == '{{ loop.index }}'" />
+      <assign name="{{menuID}}" expr="{{option[0]}}"/>
+      {% endif %}
+    {% endfor %}
+
+
+    <else/>
+    </if>
+    <goto expr="{{ goto }}"/>
+  </filled>
+
 
 </field>
 
@@ -48,7 +68,7 @@
 
 {% block content %}
 <form>
-<goto next="person"/>
+<goto expr="person"/>
 {{ createLocalMenu("person",interfaceAudioDir,personQuestionAudio,personOptions,"product") }}
 {{ createLocalMenu("product",interfaceAudioDir,productQuestionAudio,productOptions,"quantity") }}
 {{ enterDtmfValue("quantity",1,9,interfaceAudioDir,quantityQuestionAudio,"location") }}
@@ -57,7 +77,7 @@
 {{ enterDtmfValue("price",1,9,interfaceAudioDir,priceQuestionAudio,"submit") }}
 
 <block name="submit">
-<submit next="placeProductOffer.vxml" method="get"/>
+<submit next="placeProductOffer.vxml" method="get" namelist=/>
 </block>
 </form>
 

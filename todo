@@ -1,9 +1,16 @@
 todo:
 
-DATA todo:
-languages hebben nog geen audio label
-toevoegen: language code: 'en', 'fr', etc...
+posten product offer fixen
 
-paginering menus
+toevoegen no results als er geen resultaten zijn
+
 voice inspreek frontend maken
 nummer generator, voor een taal, met zo min mogelijk gesproken tekst, alle nummers in wav files zetten
+
+
+Known issues:
+- nummers in de data store zijn problematisch. Hoe kun je alle mogelijke getallen hierin krijgen met een audio label??
+- OpenVXI blijft soms hangen, dan neemt deze niet meer op. Reden nog vaag. Restart openVXI en asterisk lost dit op
+
+Further testing:
+more than 9 results in many situations
