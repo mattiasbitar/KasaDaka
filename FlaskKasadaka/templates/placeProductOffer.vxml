@@ -81,7 +81,7 @@
 {{ enterDtmfValue("price",1,9,interfaceAudioDir,priceQuestionAudio,"submit") }}
 <form id="submit_form">
 <block>
-<submit next="placeProductOffer.vxml" method="get"/>
+<submit next="placeProductOffer.vxml" method="get" namelist="person product quantity location currency price"/>
 </block>
 </form>
 
