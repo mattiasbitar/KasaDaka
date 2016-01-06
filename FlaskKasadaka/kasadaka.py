@@ -147,14 +147,14 @@ def placeProductOffer():
     lang = config.LanguageVars(request.args)
 
     #if all the nessecary variables are set, update data in store
-    if 'user' in request.args and 'product' in request.args and 'location' in request.args and 'price' in request.args and 'currency' in request.args and 'quantity' in request.args and 'confirm' in request.args:
+    if 'user' in request.args and 'product' in request.args and 'location' in request.args and 'price' in request.args and 'currency' in request.args and 'quantity' in request.args:
         user = request.args['user']
         product = request.args['product']
         location = request.args['location']
         price = request.args['price']
         currency = request.args['currency']
         quantity = request.args['quantity']
-        confirm = request.args['confrim']
+
 
         #determine next number for offering (add to the already existing offerings)
         allOfferings = executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -169,27 +169,25 @@ def placeProductOffer():
             if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
                 highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
         dateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        #TODO keuze in query maken
+
         #TODO confirm eerst doen
-        results = executeSparqlQuery(
-            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        offeringNumber = str(highestCurrentOfferingNumber + 1)
+        insertQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
             PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
-            SELECT DISTINCT ?person ?voicelabel_en  WHERE {
-                     ?person  rdf:type radiomarche:Person  .
-                     ?person radiomarche:contact_fname ?fname .
-                     ?person radiomarche:contact_lname ?lname.
-                     ?person speakle:voicelabel_en ?voicelabel_en
-            }
-            LIMIT 10"""
-
-            )
-        return render_template(
-            'result.vxml',
-            interfaceAudioDir = config.interfaceURL,
-            messageAudio = 'presentProductOfferings.wav',
-            redirect = 'main.vxml',
-            results = results)
+        	INSERT  DATA
+        { radiomarche:offering_xxxxx rdf:type  <http://purl.org/collections/w4ra/radiomarche/Offering> .
+        radiomarche:offering_xxxxx radiomarche:currency  <"""+ currency +"""> .
+        radiomarche:offering_xxxxx radiomarche:has_contact  <"""+ user +"""> .
+        radiomarche:offering_xxxxx radiomarche:price  <http://purl.org/collections/w4ra/radiomarche/price-"""+ price +"""> .
+        radiomarche:offering_xxxxx radiomarche:prod_name  <"""+ product +"""> .
+        radiomarche:offering_xxxxx radiomarche:quantity  <http://purl.org/collections/w4ra/radiomarche/quantity-"""+ quantity +"""> .
+        radiomarche:offering_xxxxx radiomarche:ts_date_entered  '"""+ dateTime +"""' .
+        }"""
+        insertQuery.replace("offering_xxxxx","offering_"+offeringNumber)
+        print insertQuery
+        #TODO doe een message dat alles gelukt is en terug naar main menu
+        return "?!?!?"
 
 
     #if no choice was made, present choice menu
