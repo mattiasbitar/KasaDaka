@@ -306,6 +306,7 @@ def audioReferences():
     FILTER(NOT EXISTS {?subject speakle:voicelabel_en ?voicelabel_en .})
     }"""
     subjectsWithoutVoicelabel = executeSparqlQuery(noVoicelabelQuery)
+    subjectsWithoutVoicelabel = sorted(subjectsWithoutVoicelabel)
     #check the DB for subjects with a voicelabel, to check whether it exists or not
     voicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
@@ -315,11 +316,15 @@ def audioReferences():
     ?subject rdf:type	rdfs:Resource .
     ?subject speakle:voicelabel_en ?voicelabel_en .
     }"""
-    subjectsWithVoicelabel = executeSparqlQuery(voicelabelQuery)
-    subjectsWithVoicelabel = sorted(subjectsWithVoicelabel)
+
+
 
 
     for lang in languages:
+        #TODO: implement language
+
+        voicelabelQuery = voicelabelQuery.replace("voicelabel_en","voicelabel_"+lang)
+        subjectsWithVoicelabel = executeSparqlQuery(voicelabelQuery)
         sparqlNonExistingWaveFiles = []
         sparqlExistingWaveFiles = []
         for subject in subjectsWithVoicelabel:
