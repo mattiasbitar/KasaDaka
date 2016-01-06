@@ -183,6 +183,7 @@ def placeProductOffer():
         radiomarche:offering_xxxxx radiomarche:prod_name  <"""+ product +"""> .
         radiomarche:offering_xxxxx radiomarche:quantity  <http://purl.org/collections/w4ra/radiomarche/quantity-"""+ quantity +"""> .
         radiomarche:offering_xxxxx radiomarche:ts_date_entered  '"""+ dateTime +"""' .
+        radiomarche:offering_xxxxx radiomarche:zone <"""+ location +"""> .
         }"""
         insertQuery = insertQuery.replace("offering_xxxxx","offering_"+offeringNumber)
         print insertQuery
