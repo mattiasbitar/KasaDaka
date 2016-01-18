@@ -9,7 +9,7 @@ defaultLanguage = "en"
 audioURLbase = "http://127.0.0.1/audio/"
 
 #debug mode
-debug=True
+debug=False
 
 ##DO NOT EDIT BELOW THIS line
 
