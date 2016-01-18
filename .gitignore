@@ -1,4 +1,5 @@
 .exampleSparqlOutput.xml.swp
 *.pyc
 *.swp
-
+FlaskKasadaka/FlaskKasadakaVenv/*
+FlaskKasadaka/FlaskKasadakaVenv
