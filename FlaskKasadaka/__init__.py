@@ -3,7 +3,6 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 from sparqlInterface import executeSparqlQuery, executeSparqlUpdate
 from datetime import datetime
 import config
-import callhandler
 import glob
 import re
 import urllib
