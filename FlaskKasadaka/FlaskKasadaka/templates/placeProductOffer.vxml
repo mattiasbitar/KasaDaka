@@ -1,24 +1,42 @@
 {% extends 'vxmlLayout.vxml' %}
 
+{#
+This template asks the user to enter all the necessary input to place a product offer.
+This is a more complex template, it uses macro's to generate many menu's, and also DTMF number input.
+Each form redirects to the next when filled.
+Input:
+For each menu, a matrix of options, for each option: [redirect URL, audio file]
+Other inputs are self-explanatory
+#}
+
+
+{# this macro creates a field, where the user can enter a number by DTMF #}
 {% macro enterDtmfValue(fieldName,minInputLength,maxInputLength,interfaceAudioDir,questionAudio,goto) %}
 <form id="{{ fieldName }}_form">
+{# Here the minimum and maximum number of digits to be entered are defined. The result is saved in a variable. #}
   <field name="{{ fieldName }}_field" type="digits?minlength={{ minInputLength }};maxlength={{ maxInputLength }}">
     <prompt>
     <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
     </prompt>
 
     <filled>
+    {# saves the input to a variable with the name given, to be submitted later #}
     <assign name="{{fieldName}}" expr="{{ fieldName }}_field"/>
+    
+    {# forward the user to the given goto form #}
      <goto next="#{{ goto }}_form"/>
     </filled>
   </field>
 </form>
 {% endmacro %}
 
+
+{# this generates a menu, and saves the chosen option in a variable #}
 {% macro createLocalMenu(menuID,interfaceAudioDir,questionAudio,options,goto) %}
 <form id="{{menuID}}_form">
 <field name="{{menuID}}_menu">
 <prompt>
+
 <audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
 {% for option in options %}
     {#for..#}
@@ -32,6 +50,8 @@
 {% endfor %}
 </prompt>
 
+
+{# all possible inputs from the user #}
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
       <rule id="MYRULE" scope = "dialog">
         <one-of>
@@ -43,7 +63,7 @@
      </grammar>
 
 
-
+{# when there has been input, save the corresponding URI in the given variable #}
 <filled>
     {% for option in options %}
       {% if loop.index == 1 %}
@@ -58,6 +78,8 @@
 
     <else/>
     </if>
+    
+    {# forward the user to the given goto form #}
     <goto next="#{{ goto }}_form"/>
   </filled>
 
@@ -74,14 +96,20 @@
 <goto next="#user_form"/>
 </block>
 </form>
+
+{# Here the fields are generated in the correct order. Note that the name of the forms have to be the same as defined in your python method that processes the inputs. #}
+
 {{ createLocalMenu("user",interfaceAudioDir,personQuestionAudio,personOptions,"product") }}
 {{ createLocalMenu("product",interfaceAudioDir,productQuestionAudio,productOptions,"quantity") }}
 {{ enterDtmfValue("quantity",1,9,interfaceAudioDir,quantityQuestionAudio,"location") }}
 {{ createLocalMenu("location",interfaceAudioDir,locationQuestionAudio,locationOptions,"currency") }}
 {{ createLocalMenu("currency",interfaceAudioDir,currencyQuestionAudio,currencyOptions,"price") }}
 {{ enterDtmfValue("price",1,9,interfaceAudioDir,priceQuestionAudio,"submit") }}
+
+{# all the forms have been filled, send all variables back to the python code in a HTTP GET request #}
 <form id="submit_form">
 <block>
+{# we make sure the language is forwarded as well #}
 <assign name="lang" expr="'{{language}}'"/>
 <submit next="placeProductOffer.vxml" method="get" namelist="user product quantity location currency price lang"/>
 </block>

@@ -1,5 +1,9 @@
 {% extends "vxmlLayout.vxml" %}
-
+{#
+Gives the user a single menu. 
+Input: a matrix of options, for each option: [redirect URL, audio file]
+Other inputs are self-explanatory
+#}
 
 {% block content %}
 {% block menu %}
@@ -8,7 +12,6 @@
 {% endblock %}
 
 {% macro createMenu(menuID,interfaceAudioDir,questionAudio,options) %}
-{# TODO: what if there are more than 9 options? Paginate?!  #}
 
 <form  id="{{ menuID }}">
 <field name="question1">
@@ -26,6 +29,7 @@
 {% endfor %}
 </prompt>
 
+{# all possible inputs from the user #}
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
       <rule id="MYRULE" scope = "public">
         <one-of>
@@ -37,7 +41,7 @@
      </grammar>
 
 
-
+{# when there has been input, redirect the user to the corresponding URL #}
 <filled>
     {% for option in options %}
       {% if loop.index == 1 %}

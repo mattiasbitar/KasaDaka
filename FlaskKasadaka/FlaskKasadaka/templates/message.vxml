@@ -1,4 +1,8 @@
 {% extends "vxmlLayout.vxml" %}
+{#
+plays back a message, then sends the user to the redirect
+#}
+
 {% block content %}
 <form>
 <block>

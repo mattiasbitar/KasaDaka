@@ -1,4 +1,7 @@
 {% extends "vxmlLayout.vxml" %}
+{#
+Plays back a matrix of results, i.e. from a SPARQL query
+#}
 {% block content %}
 {% block result %}
 <form id="results">

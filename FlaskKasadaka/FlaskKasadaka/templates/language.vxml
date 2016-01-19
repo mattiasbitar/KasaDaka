@@ -1,14 +1,16 @@
 {% extends "vxmlLayout.vxml" %}
 
+{#
+This template presents the user with a choice of languages.
+What is special about this page, is that each choice of language is said in the language itself.
+Input for this page:
+options=matrix of languages, for each language: [goto URL, audio file of language, language code]
+#}
 
 {% block content %}
 {% block menu %}
 
-{% block optionalMessage %}
-{% endblock %}
-
 {% macro createLanguageMenu(menuID,interfaceAudioDir,questionAudio,options) %}
-{# TODO: what if there are more than 9 options? Paginate?!  #}
 
 <form  id="{{ menuID }}">
 <field name="question1">
@@ -26,6 +28,7 @@
 {% endfor %}
 </prompt>
 
+{# all possible inputs from the user #}
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
       <rule id="MYRULE" scope = "public">
         <one-of>
@@ -36,8 +39,7 @@
        </rule>
      </grammar>
 
-
-
+{# when there has been input, redirect the user to the corresponding URL #}
 <filled>
     {% for option in options %}
       {% if loop.index == 1 %}

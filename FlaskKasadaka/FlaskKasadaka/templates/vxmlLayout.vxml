@@ -2,6 +2,9 @@
 <vxml version = "2.1" >
 <property name="inputmodes" value="dtmf" /> 
 <!-- Kasadaka Vxml File Layout -->
+{#
+This is the basic voiceXML layout
+#}
 {% block content %}{% endblock %}
 
 </vxml>
