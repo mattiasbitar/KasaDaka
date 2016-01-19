@@ -1,5 +1,3 @@
-
-
 import urllib2
 import urllib
 import xml.etree.ElementTree as ET
@@ -7,6 +5,10 @@ from xml.dom import minidom
 import config
 
 def executeSparqlQuery(query, url = config.sparqlURL):
+	"""Provides the results of a SPARQL query
+	Inputs: query (string), SPARQL endpoint (string)
+	Output: Matrix of results, each result has cells from left(0) to right
+	"""
     ET.register_namespace("","http://www.w3.org/2005/sparql-results#")
 
     queryHtmlFormat = urllib.quote(query)
@@ -36,6 +38,10 @@ def executeSparqlQuery(query, url = config.sparqlURL):
     return results
 
 def executeSparqlUpdate(query, url = config.sparqlURL):
+	"""Runs a sparql update query
+	Inputs: query (string), SPARQL endpoint (string)
+	Output: boolean whether update was successful
+	"""
 
     queryHtmlFormat = urllib.quote(query)
     requestURL = url + "update?update=" + queryHtmlFormat
