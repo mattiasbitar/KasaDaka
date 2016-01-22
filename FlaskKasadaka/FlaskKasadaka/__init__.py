@@ -1,8 +1,6 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-    render_template, flash
+
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from sparqlInterface import executeSparqlQuery, executeSparqlUpdate
 from datetime import datetime
 import config
@@ -11,45 +9,31 @@ import re
 import urllib
 
 app = Flask(__name__)
-
-
 @app.route('/')
 def index():
-	""" Index page
-	Only used to confirm hosting is working correctly
-	"""
     return 'This is the Kasadaka Vxml generator'
 
 
 @app.route('/main.vxml')
 def main():
-	"""Main menu
-	This is the entrypoint for VXI/Asterisk.
-	Functions of this VXML are to let the user choose a language, and then offer the main menu.
-	"""
-	# check whether language is selected
     if 'lang' in request.args:
         lang = config.LanguageVars(request.args)
+        #list of options in initial menu: link to file, and audio description of the choice
+        options = [
+                ['requestProductOfferings.vxml?lang='+lang.language,    lang.audioInterfaceURL+'requestProductOfferings.wav'],
+                ['placeProductOffer.vxml?lang='+lang.language,   lang.audioInterfaceURL+'placeProductOffer.wav']
+                ]
 
-        # list of options in initial menu: [link to file, audio file of the choice]
-        options = [['requestProductOfferings.vxml?lang='
-                   + lang.language, lang.audioInterfaceURL
-                   + 'requestProductOfferings.wav'],
-                   ['placeProductOffer.vxml?lang=' + lang.language,
-                   lang.audioInterfaceURL + 'placeProductOffer.wav']]
 
-		# return main menu
-        return render_template('main.vxml',
-                               interfaceAudioDir=lang.audioInterfaceURL,
-                               welcomeAudio='welcome.wav',
-                               questionAudio='mainMenuQuestion.wav',
-                               options=options)
+        return render_template(
+        'main.vxml',
+        interfaceAudioDir = lang.audioInterfaceURL,
+        welcomeAudio = 'welcome.wav',
+        questionAudio = "mainMenuQuestion.wav",
+        options = options)
     else:
-
-        # Offer choice of language
-
-        languagesQuery = \
-            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        #give your language
+        languagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
         PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
@@ -60,45 +44,37 @@ def main():
 
         }"""
         languages = executeSparqlQuery(languagesQuery)
-        # For all languages in the triple store, offer the language option spoken in the language itself.
         for language in languages:
-            language.append(config.audioURLbase + language[0].rsplit('_'
-                            , 1)[-1] + '/interface/'
-                            + language[0].rsplit('/', 1)[-1] + '.wav')
+            language.append(config.audioURLbase + language[0].rsplit('_', 1)[-1] + "/interface/" + language[0].rsplit('/', 1)[-1] + ".wav")
             language.append(language[0].rsplit('_', 1)[-1])
-            language[0] = 'main.vxml?lang=' + language[0].rsplit('_',
-                    1)[-1]
-		# The languages matrix now consists of arrays of [redirect URL, audio URL, language code]
-        return render_template('language.vxml', options=languages,
-                               audioDir=config.audioURLbase,
-                               questionAudio=config.audioURLbase
-                               + config.defaultLanguage
-                               + '/interface/chooseLanguage.wav')
+            language[0] = "main.vxml?lang=" + language[0].rsplit('_', 1)[-1]
+
+
+        return render_template(
+        'language.vxml',
+        options = languages,
+        audioDir = config.audioURLbase,
+        questionAudio = config.audioURLbase+config.defaultLanguage+"/interface/chooseLanguage.wav"
+
+        )
 
 
 @app.route('/requestProductOfferings.vxml')
 def requestProductOfferings():
-	""" This VXML function offers looking up the offerings of a product.
-	"""
-    # process the language
-
+    #process the language
     lang = config.LanguageVars(request.args)
 
-    # if the chosen product has been entered, show results
-
+    #if the chosen product has been entered, show results
     if 'product' in request.args:
         choice = request.args['product']
 
-        query = \
-            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
         PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
         SELECT DISTINCT  ?quantity_voicelabel ?contact_voicelabel ?price_voicelabel ?currency_voicelabel WHERE {
         #get offers of selected product
         ?offering rdf:type	radiomarche:Offering.
-        ?offering radiomarche:prod_name <""" \
-            + choice \
-            + """>.
+        ?offering radiomarche:prod_name <"""+choice+ """>.
 
         #get contact
         ?offering radiomarche:has_contact ?contact.
@@ -119,16 +95,16 @@ def requestProductOfferings():
 
         results = executeSparqlQuery(query)
 
-        return render_template('result.vxml',
-                               interfaceAudioDir=lang.audioInterfaceURL,
-                               messageAudio='presentProductOfferings.wav'
-                               , redirect='main.vxml?lang='
-                               + lang.language, results=results)
+        return render_template(
+            'result.vxml',
+            interfaceAudioDir = lang.audioInterfaceURL,
+            messageAudio = 'presentProductOfferings.wav',
+            redirect = 'main.vxml?lang='+lang.language,
+            results = results)
 
-    # if no choice was made, offer choices of products to get offerings from
 
-    query = \
-        """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    #if no choice was made, offer choices of products to get offerings from
+    query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
     SELECT DISTINCT ?product ?voicelabel_en  WHERE {
@@ -137,33 +113,27 @@ def requestProductOfferings():
     }"""
     query = lang.replaceVoicelabels(query)
     choices = executeSparqlQuery(query)
-
-    # add the url of this page to the links, so the user gets the results
-    # also keep the language in the GET header
-
+    #add the url of this page to the links, so the user gets the results
+    #also keep the language
     for choice in choices:
-        choice[0] = 'requestProductOfferings.vxml?lang=' \
-            + lang.language + '&amp;product=' + choice[0]
+        choice[0] = 'requestProductOfferings.vxml?lang='+lang.language+'&amp;product=' + choice[0]
 
-    return render_template('menu.vxml', options=choices,
-                           interfaceAudioDir=lang.audioInterfaceURL,
-                           questionAudio='chooseYourProduct.wav')
-
+    return render_template(
+    'menu.vxml',
+    options = choices,
+    interfaceAudioDir = lang.audioInterfaceURL,
+    questionAudio = "chooseYourProduct.wav"
+    )
 
 @app.route('/placeProductOffer.vxml')
 def placeProductOffer():
+#for this function, a lot of things are defined in the template 'placeProductOffer.vxml'. You will need to edit this file as well.
+    #process the language
 
-	# for this function, the template 'placeProductOffer.vxml' contains a lot of the generating. 
-	# You will need to edit this file as well.
-    
-    # process the language
     lang = config.LanguageVars(request.args)
 
-    # if all the nessecary variables are set, update data in triple store
-
-    if 'user' in request.args and 'product' in request.args \
-        and 'location' in request.args and 'price' in request.args \
-        and 'currency' in request.args and 'quantity' in request.args:
+    #if all the nessecary variables are set, update data in store
+    if 'user' in request.args and 'product' in request.args and 'location' in request.args and 'price' in request.args and 'currency' in request.args and 'quantity' in request.args:
         user = request.args['user']
         product = request.args['product']
         location = request.args['location']
@@ -171,10 +141,9 @@ def placeProductOffer():
         currency = request.args['currency']
         quantity = request.args['quantity']
 
-        # determine next number for offering (add to the already existing offerings)
 
-        allOfferings = \
-            executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        #determine next number for offering (add to the already existing offerings)
+        allOfferings = executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
         PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
         SELECT DISTINCT ?offering   WHERE {
@@ -182,66 +151,46 @@ def placeProductOffer():
         }""")
         highestCurrentOfferingNumber = 0
         for offering in allOfferings:
-
-            # check the highest current offering in triple store
-
-            if int(offering[0].rsplit('_', 1)[-1]) \
-                > highestCurrentOfferingNumber:
-                highestCurrentOfferingNumber = \
-                    int(offering[0].rsplit('_', 1)[-1])
+            #check the highest current offering in database
+            if int(offering[0].rsplit('_', 1)[-1]) > highestCurrentOfferingNumber:
+                highestCurrentOfferingNumber = int(offering[0].rsplit('_', 1)[-1])
         dateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        #TODO confirm eerst doen
         offeringNumber = str(highestCurrentOfferingNumber + 1)
-        insertQuery = \
-            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        insertQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
             PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
         	INSERT  DATA
         { radiomarche:offering_xxxxx rdf:type  <http://purl.org/collections/w4ra/radiomarche/Offering> .
-        radiomarche:offering_xxxxx radiomarche:currency  <""" \
-            + currency \
-            + """> .
-        radiomarche:offering_xxxxx radiomarche:has_contact  <""" \
-            + user \
-            + """> .
-        radiomarche:offering_xxxxx radiomarche:price  <http://purl.org/collections/w4ra/radiomarche/price-""" \
-            + price \
-            + """> .
-        radiomarche:offering_xxxxx radiomarche:prod_name  <""" \
-            + product \
-            + """> .
-        radiomarche:offering_xxxxx radiomarche:quantity  <http://purl.org/collections/w4ra/radiomarche/quantity-""" \
-            + quantity \
-            + """> .
-        radiomarche:offering_xxxxx radiomarche:ts_date_entered  '""" \
-            + dateTime \
-            + """' .
-        radiomarche:offering_xxxxx radiomarche:zone <""" \
-            + location + """> .
+        radiomarche:offering_xxxxx radiomarche:currency  <"""+ currency +"""> .
+        radiomarche:offering_xxxxx radiomarche:has_contact  <"""+ user +"""> .
+        radiomarche:offering_xxxxx radiomarche:price  <http://purl.org/collections/w4ra/radiomarche/price-"""+ price +"""> .
+        radiomarche:offering_xxxxx radiomarche:prod_name  <"""+ product +"""> .
+        radiomarche:offering_xxxxx radiomarche:quantity  <http://purl.org/collections/w4ra/radiomarche/quantity-"""+ quantity +"""> .
+        radiomarche:offering_xxxxx radiomarche:ts_date_entered  '"""+ dateTime +"""' .
+        radiomarche:offering_xxxxx radiomarche:zone <"""+ location +"""> .
         }"""
-        # insert the offering number in the query
-        insertQuery = insertQuery.replace('offering_xxxxx', 'offering_'
-                + offeringNumber)
+        insertQuery = insertQuery.replace("offering_xxxxx","offering_"+offeringNumber)
         result = executeSparqlUpdate(insertQuery)
-
-		# if posting succeeded, confirm. Otherwise give error.
+        #TODO doe een message dat alles gelukt is en terug naar main menu
         if result:
-            return render_template('message.vxml',
-                                   redirect='main.vxml?lang='
-                                   + lang.language,
-                                   messageAudio='placeProductOffer_success.wav'
-                                   ,
-                                   interfaceAudioDir=lang.audioInterfaceURL)
+            return render_template(
+                'message.vxml',
+                redirect ="main.vxml?lang=" + lang.language,
+                messageAudio = 'placeProductOffer_success.wav',
+                interfaceAudioDir = lang.audioInterfaceURL)
         else:
-            return render_template('message.vxml',
-                                   redirect='main.vxml?lang='
-                                   + lang.language,
-                                   messageAudio='error.wav',
-                                   interfaceAudioDir=lang.audioInterfaceURL)
+            return render_template(
+                'message.vxml',
+                redirect ="main.vxml?lang=" + lang.language,
+                messageAudio = 'error.wav',
+                interfaceAudioDir = lang.audioInterfaceURL)
 
-    # if no choice was made, present input choices for posting the offer
 
-    userChoices = \
-        executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    #if no choice was made, present choice menu
+    userChoices = executeSparqlQuery(
+        """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
         PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
         SELECT DISTINCT ?person ?voicelabel_en  WHERE {
@@ -251,24 +200,24 @@ def placeProductOffer():
                  ?person speakle:voicelabel_en ?voicelabel_en
         }""")
 
-    productChoices = \
-        executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    productChoices = executeSparqlQuery(
+            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
             PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
             SELECT DISTINCT ?product ?voicelabel_en  WHERE {
             ?product rdf:type	radiomarche:Product.
             ?product speakle:voicelabel_en ?voicelabel_en
             }""")
-    locationChoices = \
-        executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    locationChoices = executeSparqlQuery(
+            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
     SELECT DISTINCT ?zone ?voicelabel  WHERE {
     ?zone rdf:type	radiomarche:Zone.
 	?zone speakle:voicelabel_en ?voicelabel
     }""")
-    currencyChoices = \
-        executeSparqlQuery("""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    currencyChoices = executeSparqlQuery(
+            """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
     SELECT DISTINCT ?currency ?voicelabel  WHERE {
@@ -277,60 +226,42 @@ def placeProductOffer():
     }""")
 
     return render_template(
-        'placeProductOffer.vxml',
-        personOptions=userChoices,
-        personQuestionAudio='placeProductOffer_person.wav',
-        productOptions=productChoices,
-        productQuestionAudio='placeProductOffer_product.wav',
-        locationOptions=locationChoices,
-        locationQuestionAudio='placeProductOffer_location.wav',
-        currencyOptions=currencyChoices,
-        currencyQuestionAudio='placeProductOffer_currency.wav',
-        quantityQuestionAudio='placeProductOffer_quantity.wav',
-        priceQuestionAudio='placeProductOffer_price.wav',
-        interfaceAudioDir=lang.audioInterfaceURL,
-        language=lang.language,
-        )
+    'placeProductOffer.vxml',
+    personOptions = userChoices,
+    personQuestionAudio = "placeProductOffer_person.wav",
+    productOptions = productChoices,
+    productQuestionAudio = "placeProductOffer_product.wav",
+    locationOptions = locationChoices,
+    locationQuestionAudio = "placeProductOffer_location.wav",
+    currencyOptions = currencyChoices,
+    currencyQuestionAudio = "placeProductOffer_currency.wav",
+    quantityQuestionAudio = "placeProductOffer_quantity.wav",
+    priceQuestionAudio = "placeProductOffer_price.wav",
+    interfaceAudioDir = lang.audioInterfaceURL,
+    language = lang.language
+    )
 
 
 @app.route('/audioreferences.html')
 def audioReferences():
     finalResultsInterface = []
     finalResultsSparql = []
-    
-    #for all relevant files in the project, scan them for matches on .wav files
     pythonFiles = glob.glob('*.py')
     pythonFiles.extend(glob.glob('templates/*'))
     resultsInterface = []
-    wavFilePattern = re.compile("""([^\s\\/+"']+\.wav)""", re.I)
+    wavFilePattern = re.compile("""([^\s\\/+"']+\.wav)""",re.I)
     for pythonFile in pythonFiles:
         text = open(pythonFile).read()
         for match in wavFilePattern.findall(text):
-
-            # ignore match on regex above
-
+            #ignore match on regex above
             if match != "\.wav":
                 resultsInterface.append(match)
+    #remove duplicates
+    resultsInterface.extend(['1.wav','2.wav','3.wav','4.wav','5.wav','6.wav','7.wav','8.wav','9.wav','0.wav','hash.wav','star.wav'])
 
-	# add the keys on the keypad of a phone, they also need to have their own wav files
-    resultsInterface.extend([
-        '1.wav',
-        '2.wav',
-        '3.wav',
-        '4.wav',
-        '5.wav',
-        '6.wav',
-        '7.wav',
-        '8.wav',
-        '9.wav',
-        '0.wav',
-        'hash.wav',
-        'star.wav',
-        ])
 
     languages = []
-    getLanguagesQuery = \
-        """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    getLanguagesQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
@@ -338,44 +269,35 @@ def audioReferences():
 
     SELECT DISTINCT  ?voicelabel  WHERE {
           ?voicelabel   rdfs:subPropertyOf speakle:voicelabel.
+
+
+
     }"""
     outputGetLanguagesQuery = executeSparqlQuery(getLanguagesQuery)
-
-
+    #get the language code behind the last slash
     for string in outputGetLanguagesQuery:
-
-        # also add the language spoken in the language itself, to choose language (see main.vxml method)
-
-        resultsInterface.append(string[0].rsplit('/', 1)[-1] + '.wav')
-
-        # add all used languages to the languages array
-
+        #also add the language itself to choose language
+        resultsInterface.append(string[0].rsplit('/', 1)[-1]+".wav")
+        #add the langauges
         languages.append(string[0].rsplit('_', 1)[-1])
-        
-	# remove duplicates
+
     usedWaveFiles = set(resultsInterface)
-    
-    # for all languages, check whether the wave files for the interface exist
     for lang in languages:
         nonExistingWaveFiles = []
         existingWaveFiles = []
         for waveFile in usedWaveFiles:
 
-            url = config.audioURLbase + '/' + lang + '/interface/' \
-                + waveFile
+            url = config.audioURLbase +"/"+lang+"/interface/"+ waveFile
             if urllib.urlopen(url).getcode() == 200:
                 existingWaveFiles.append(waveFile)
             else:
                 nonExistingWaveFiles.append(waveFile)
-		existingWaveFiles = sorted(existingWaveFiles)
-        nonExistingWaveFiles = sorted(nonExistingWaveFiles)
-        finalResultsInterface.append([lang, existingWaveFiles,
-                nonExistingWaveFiles])
+                existingWaveFiles = sorted(existingWaveFiles)
+                nonExistingWaveFiles = sorted(nonExistingWaveFiles)
+        finalResultsInterface.append([lang,existingWaveFiles,nonExistingWaveFiles])
 
-    # check the DB for subjects without a voicelabel
-
-    noVoicelabelQuery = \
-        """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    #check the DB for subjects without a voicelabel
+    noVoicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -385,13 +307,11 @@ def audioReferences():
     }"""
     subjectsWithoutVoicelabel = executeSparqlQuery(noVoicelabelQuery)
     subjectsWithoutVoicelabel = sorted(subjectsWithoutVoicelabel)
+            #TODO: implement language
 
-            # TODO: implement language
 
-    # check the DB for subjects with a voicelabel, to check whether it exists or not
-
-    voicelabelQuery = \
-        """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    #check the DB for subjects with a voicelabel, to check whether it exists or not
+    voicelabelQuery = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX speakle: <http://purl.org/collections/w4ra/speakle/>
     PREFIX radiomarche: <http://purl.org/collections/w4ra/radiomarche/>
 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -400,12 +320,14 @@ def audioReferences():
     ?subject speakle:voicelabel_en ?voicelabel_en .
     }"""
 
-	# for each language, find all the voicelabels, and determine whether they exist
+
+
+
     for lang in languages:
 
-        voicelabelQueryLang = voicelabelQuery.replace('voicelabel_en',
-                'voicelabel_' + lang)
-        subjectsWithVoicelabel = executeSparqlQuery(voicelabelQueryLang)
+
+        voicelabelQuery = voicelabelQuery.replace("voicelabel_en","voicelabel_"+lang)
+        subjectsWithVoicelabel = executeSparqlQuery(voicelabelQuery)
         sparqlNonExistingWaveFiles = []
         sparqlExistingWaveFiles = []
         for subject in subjectsWithVoicelabel:
@@ -415,19 +337,19 @@ def audioReferences():
                 sparqlExistingWaveFiles.append(subject[1])
             else:
                 sparqlNonExistingWaveFiles.append(subject[1])
-		sparqlExistingWaveFiles = \
-                    sorted(sparqlExistingWaveFiles)
-		sparqlNonExistingWaveFiles = \
-                    sorted(sparqlNonExistingWaveFiles)
-        finalResultsSparql.append([lang, sparqlExistingWaveFiles,
-                                  sparqlNonExistingWaveFiles])
-
-    return render_template('audiofiles.html', scannedFiles=pythonFiles,
-                           interfaceResults=finalResultsInterface,
-                           subjectsWithoutVoicelabel=subjectsWithoutVoicelabel,
-                           sparqlResults=finalResultsSparql)
+                sparqlExistingWaveFiles = sorted(sparqlExistingWaveFiles)
+                sparqlNonExistingWaveFiles = sorted(sparqlNonExistingWaveFiles)
+        finalResultsSparql.append([lang,sparqlExistingWaveFiles,sparqlNonExistingWaveFiles])
 
 
-# This is standard Flask code
+
+    return render_template(
+    'audiofiles.html',
+    scannedFiles = pythonFiles,
+    interfaceResults = finalResultsInterface,
+    subjectsWithoutVoicelabel = subjectsWithoutVoicelabel,
+    sparqlResults = finalResultsSparql)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=config.debug)
+    app.run(host="0.0.0.0",debug=config.debug)
