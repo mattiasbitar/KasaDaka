@@ -11,6 +11,9 @@ import urllib
 app = Flask(__name__)
 @app.route('/')
 def index():
+    """ Index page
+	Only used to confirm hosting is working correctly
+	"""
     return 'This is the Kasadaka Vxml generator'
 
 
@@ -353,4 +356,3 @@ def audioReferences():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",debug=config.debug)
-    
