@@ -249,8 +249,8 @@ def placeProductOffer():
 def audioReferences():
     finalResultsInterface = []
     finalResultsSparql = []
-    pythonFiles = glob.glob('*.py')
-    pythonFiles.extend(glob.glob('templates/*'))
+    pythonFiles = glob.glob(config.pythonFilesDir+'*.py')
+    pythonFiles.extend(glob.glob(config.pythonFilesDir+'templates/*'))
     resultsInterface = []
     wavFilePattern = re.compile("""([^\s\\/+"']+\.wav)""",re.I)
     for pythonFile in pythonFiles:

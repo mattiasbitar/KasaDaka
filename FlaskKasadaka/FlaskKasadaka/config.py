@@ -12,6 +12,9 @@ audioURLbase = "http://127.0.0.1/audio/"
 #debug mode
 debug=False
 
+#python files location
+pythonFilesDir = "/home/pi/KasaDaka/FlaskKasadaka/FlaskKasadaka/"
+
 ##DO NOT EDIT BELOW THIS line
 
 
