@@ -1,0 +1,68 @@
+{% extends "vxmlLayout.vxml" %}
+{#
+Gives the user a single menu. 
+Input: a matrix of options, for each option: [redirect URL, audio file]
+Other inputs are self-explanatory
+#}
+
+{% block content %}
+{% block menu %}
+
+{% block optionalMessage %}
+{% endblock %}
+
+{% macro createMenu(menuID,interfaceAudioDir,questionAudio,options) %}
+
+<form  id="{{ menuID }}">
+<field name="question1">
+<prompt>
+<audio src="{{ interfaceAudioDir ~ questionAudio }}"/>
+{% for option in options %}
+    {#for..#}
+    <audio src="{{ interfaceAudioDir ~ "preoption.wav" }}"/>
+    {#option#}
+    <audio src="{{ option[1] }}"/>
+    {#press#}
+    <audio src="{{ interfaceAudioDir ~ "postoption.wav" }}"/>
+    {#number#}
+    <audio src="{{ interfaceAudioDir ~  loop.index ~ ".wav" }}"/>
+{% endfor %}
+</prompt>
+
+{# all possible inputs from the user #}
+<grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
+      <rule id="MYRULE" scope = "public">
+        <one-of>
+          {% for option in options %}
+            <item>{{ loop.index }}</item>
+          {% endfor %}
+        </one-of>
+       </rule>
+     </grammar>
+
+
+{# when there has been input, redirect the user to the corresponding URL #}
+<filled>
+    {% for option in options %}
+      {% if loop.index == 1 %}
+      <if cond="question1 == '{{ loop.index }}'">
+      <goto next="{{option[0]}}"/>
+      {% else %}
+      <elseif cond="question1 == '{{ loop.index }}'" />
+      <goto next="{{option[0]}}"/>
+      {% endif %}
+    {% endfor %}
+
+
+    <else/>
+    </if>
+  </filled>
+
+</field>
+</form>
+
+{% endmacro %}
+{{ createMenu("menu",interfaceAudioDir,questionAudio,options) }}
+
+{% endblock %}
+{% endblock %}

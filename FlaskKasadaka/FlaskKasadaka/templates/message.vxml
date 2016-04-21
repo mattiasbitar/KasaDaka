@@ -1,0 +1,16 @@
+{% extends "vxmlLayout.vxml" %}
+{#
+plays back a message, then sends the user to the redirect
+#}
+
+{% block content %}
+<form>
+<block>
+<prompt>
+<audio src="{{ interfaceAudioDir ~ messageAudio }}"/>
+</prompt>
+<goto next="{{ redirect }}"/>
+</block>
+</form>
+
+{% endblock %}
