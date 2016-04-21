@@ -20,10 +20,13 @@ Other inputs are self-explanatory
 {% for option in options %}
     {#for..#}
     <audio src="{{ interfaceAudioDir ~ "preoption.wav" }}"/>
+    
     {#option#}
     <audio src="{{ option[1] }}"/>
+    
     {#press#}
     <audio src="{{ interfaceAudioDir ~ "postoption.wav" }}"/>
+    
     {#number#}
     <audio src="{{ interfaceAudioDir ~  loop.index ~ ".wav" }}"/>
 {% endfor %}
