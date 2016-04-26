@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <vxml version="2.0" xmlns="http://www.w3.org/2001/vxml">
 
+ <form>
+  <block>
+  <prompt> <audio src="helloworld.wav"/> </prompt>
+  </block>
+ </form>
+
  <menu id="menu1" dtmf="true">
    <prompt>
    <audio src="openingfrase.wav"/>
@@ -11,6 +17,7 @@
 
   <form id="questionForm">
   <block>
+  <prompt> <audio src="helloworld.wav"/> </prompt>
   <goto next="questions.xml"/>
   </block>
  </form>
