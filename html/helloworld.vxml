@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <vxml version="2.0" xmlns="http://www.w3.org/2001/vxml">
 
- <menu id="menu1" dtmf="true">
+<form  id="{{ menuID }}">
+<field name="question1">
    <prompt>
    <audio src="openingfrase.wav"/>
    </prompt>
 
-  </menu>
 
+</field>
+</form>
 </vxml>
