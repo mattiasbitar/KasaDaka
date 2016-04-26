@@ -5,23 +5,7 @@
    <prompt>
    <audio src="openingfrase.wav"/>
    </prompt>
-<!---   <choice next="#questionForm"/>
-   <choice next="#answerForm"/>--->
+
   </menu>
-<!--
-  <form id="questionForm">
-  <block>
-  <prompt> <audio src="helloworld.wav"/> </prompt>
-  <goto next="questions.xml"/>
-  </block>
- </form>
- 
- <form id="answerform">
-  <block>
-   <prompt>
-	<goto next="answers.xml"/>
-   </prompt>
-  </block>
- </form>
- -->
+
 </vxml>
