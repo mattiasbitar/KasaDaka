@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" >  
+  <menu id="menu1" dtmf="true">
+   <prompt>You have reached radio question and answers. Select 1 if you have a question or 2 if you have an answer</prompt>
+   <choice next="#questionForm"/>
+   <choice next="#answerForm"/>
+  </menu>
+
+ <form id="questionForm">
+  <block>
+  <prompt> You chose to ask a question </prompt>
+  <goto next="questions.xml"/>
+  </block>
+ </form>
+ 
+  <form id="answerform">
+  <block>
+   <prompt>
+    You chose to give an answer
+	<goto next="answers.xml"/>
+   </prompt>
+  </block>
+ </form>
+ 
+</vxml>

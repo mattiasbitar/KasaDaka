@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" >  
+  <menu id="menu1" dtmf="true">
+   <prompt>Answers concerning rainfall select 1, weather conditions select 2, harvesting select 3, other topic select 4</prompt>
+   <choice next="#form1"/>
+   <choice next="#form2"/>
+   <choice next="#form3"/>
+   <choice next="#form4"/>
+  </menu>
+	
+	 <form id="form1">
+  <block>
+   <prompt>
+    You chose rainfall
+   </prompt>
+	<goto next="http://webhosting.voxeo.net/198098/www/RecordAnswer.xml"/>
+  </block>
+ </form>
+ 
+  <form id="form2">
+  <block>
+   <prompt>
+    You chose weather
+	<goto next="http://webhosting.voxeo.net/198098/www/WheaterRecordAnswer.xml"/>
+   </prompt>
+  </block>
+ </form>
+ 
+  <form id="form3">
+  <block>
+   <prompt>
+    You chose harvesting
+	<goto next="http://webhosting.voxeo.net/198098/www/RecordAnswer.xml"/>
+   </prompt>
+  </block>
+ </form>
+	
+  <form id="form4">
+  <block>
+   <prompt>
+    You chose other
+		<goto next="http://webhosting.voxeo.net/198098/www/RecordAnswer.xml"/>
+   </prompt>
+  </block>
+ </form>
+ 
+</vxml>
