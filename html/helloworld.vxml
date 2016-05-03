@@ -8,6 +8,7 @@
 <field name="question1">
 <prompt>
 <audio src="openingfrase.wav"/>
+<audio src="firstchoice.wav"/>
 </prompt>
 
 
