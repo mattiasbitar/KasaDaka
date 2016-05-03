@@ -2,7 +2,7 @@
 <vxml version="2.1" xmlns="http://www.w3.org/2001/vxml">
  
 <form id="F1">
-<record name="R_1" beep="true" dtmfterm="true">
+<record name="R_1" dtmfterm="true">
 <prompt>
 <audio src="questionbeep.wav"/>
 </prompt>
