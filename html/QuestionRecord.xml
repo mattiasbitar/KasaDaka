@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" >
+<property name="inputmodes" value="dtmf" /> 
+<!-- Kasadaka Vxml File Layout -->
+
+<form  id="menu">
+<field name="question1">
+<prompt>
+<audio src="questionbeep.wav"/>
+</prompt>
+
+</field>
+</form>
+
+
+</vxml>
+
+
+
+<!--*
+<?xml version="1.0" encoding="UTF-8"?>
 <vxml version="2.1">
 <property name="inputmodes" value="dtmf" /> 
  
@@ -6,6 +26,7 @@
 <!--
 <record name="R_1" beep="true" dtmfterm="true">
 -->
+<!--*
 <prompt>
 <audio src="questionbeep.wav"/>
 </prompt>
@@ -18,11 +39,13 @@
 <log expr="R_1$.termchar" />
 <log expr="R_1$.size" />
  -->
+ <!--*
 <prompt>
 <audio src="yourquestionwas.wav"/>
 <!--
 <value expr="R_1" />
 -->
+<!--*
 </prompt>
 <promt>
 <audio src="questiongoodbye.wav"/>
@@ -31,5 +54,7 @@
 </filled>
 </record>
 -->
+<!--*
 </form>
 </vxml>
+*-->
