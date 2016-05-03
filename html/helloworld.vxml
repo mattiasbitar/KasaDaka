@@ -4,19 +4,10 @@
 <!-- Kasadaka Vxml File Layout -->
 
 
-
-
-
-
-
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="helloworld.wav"/>
-
-    
-
-
+<audio src="openingfrase.wav"/>
 </prompt>
 
 
