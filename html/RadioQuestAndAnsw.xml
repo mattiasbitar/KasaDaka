@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version = "2.1" >  
   <menu id="menu1" dtmf="true">
-   <prompt>You have reached radio question and answers. Select 1 if you have a question or 2 if you have an answer</prompt>
+   <audio src="openingfrase.wav"/>
    <choice next="#questionForm"/>
    <choice next="#answerForm"/>
   </menu>
 
  <form id="questionForm">
   <block>
-  <prompt> You chose to ask a question </prompt>
+  <prompt> 
+  <audio src="questionchoice.wav"/>
+  </prompt>
   <goto next="questions.xml"/>
   </block>
  </form>
@@ -16,7 +18,7 @@
   <form id="answerform">
   <block>
    <prompt>
-    You chose to give an answer
+    <audio src="answerchoice.wav"/>
 	<goto next="answers.xml"/>
    </prompt>
   </block>
