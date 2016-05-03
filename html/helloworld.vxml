@@ -31,16 +31,25 @@
     
       
       <if cond="question1 == '1'">
+		<prompt>
+		<audio src="questionchoice.wav"/>
+		</prompt>
       <goto next="main.vxml?lang=en"/>
       
     
       
       <elseif cond="question1 == '2'" />
+		<prompt>
+		<audio src="answerchoice.wav"/>
+		</prompt>
       <goto next="main.vxml?lang=fr"/>
       
     
       
       <elseif cond="question1 == '3'" />
+		<prompt>
+		<audio src="answerchoice.wav"/>
+		</prompt>
       <goto next="main.vxml?lang=nl"/>
       
     
