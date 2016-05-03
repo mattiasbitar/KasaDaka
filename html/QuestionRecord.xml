@@ -2,7 +2,9 @@
 <vxml version="2.1">
  
 <form id="F1">
+<!--
 <record name="R_1" beep="true" dtmfterm="true">
+-->
 <prompt>
 <audio src="questionbeep.wav"/>
 </prompt>
@@ -26,7 +28,7 @@
 </promt>
 <!--
 </filled>
--->
 </record>
+-->
 </form>
 </vxml>
