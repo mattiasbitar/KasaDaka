@@ -35,7 +35,7 @@
 		<prompt>
 		<audio src="rainfallchoice.wav"/>
 		</prompt>
-      <goto next="main.vxml?lang=en"/>
+      <goto next="QuestionRecord.xml"/>
       
     
       
