@@ -9,6 +9,7 @@
 <prompt>
 <audio src="openingfrase.wav"/>
 <audio src="firstchoice.wav"/>
+<audio src="extendedfirstchoice.wav"/>
 </prompt>
 
 
@@ -48,7 +49,7 @@
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="answerchoice.wav"/>
+		<audio src="listenchoice.wav"/>
 		</prompt>
       <goto next="main.vxml?lang=nl"/>
       
