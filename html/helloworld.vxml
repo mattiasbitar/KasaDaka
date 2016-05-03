@@ -35,7 +35,7 @@
 		<prompt>
 		<audio src="questionchoice.wav"/>
 		</prompt>
-      <goto next="questions.xml"/>
+      <goto next="question.xml"/>
       
     
       
