@@ -7,7 +7,7 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="questionsmenu.wav"/>
+<audio src="questionbeep.wav"/>
 </prompt>
 
 
@@ -33,10 +33,17 @@
       
       <if cond="question1 == '1'">
 		<prompt>
-		<audio src="rainfallchoice.wav"/>
+		<audio src="anykey.wav"/>
 		</prompt>
-       <goto next="questions.xml"/>
-      
+		<record name="R_1" beep="true" dtmfterm="true">
+       <filled>
+		<log expr="R_1$.duration" />
+		<log expr="R_1$.termchar" />
+		<log expr="R_1$.size" />
+		<prompt>
+		<audio src="yourquestionwas.wav"/>
+		</filled>
+		</record>
     
       
       <elseif cond="question1 == '2'" />
@@ -73,46 +80,3 @@
 
 
 </vxml>
-
-
-<!--*
-<?xml version="1.0" encoding="UTF-8"?>
-<vxml version="2.1">
-<property name="inputmodes" value="dtmf" /> 
- 
-<form id="F1">
-<!--
-<record name="R_1" beep="true" dtmfterm="true">
--->
-<!--*
-<prompt>
-<audio src="questionbeep.wav"/>
-</prompt>
-<prompt>
-<audio src="anykey.wav"/>
-</prompt>
- <!--
-<filled>
-<log expr="R_1$.duration" />
-<log expr="R_1$.termchar" />
-<log expr="R_1$.size" />
- -->
- <!--*
-<prompt>
-<audio src="yourquestionwas.wav"/>
-<!--
-<value expr="R_1" />
--->
-<!--*
-</prompt>
-<promt>
-<audio src="questiongoodbye.wav"/>
-</promt>
-<!--
-</filled>
-</record>
--->
-<!--*
-</form>
-</vxml>
-*-->
