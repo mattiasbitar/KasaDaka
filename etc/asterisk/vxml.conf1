@@ -5,7 +5,7 @@
 [general]
 recordsendaudio=yes
 speechrecord=yes
-speechrecorddirectory=/tmp/speechrecord
+speechrecordirecory=/tmp/speechrecord
 recorddirectory=/tmp/recorddirectorty
 
 autoanswer=yes
@@ -49,4 +49,3 @@ urlvideo=http://localhost/vxml/video.vxml
 max=1
 speech=no
 dialformat=SIP/%s
-
