@@ -1,47 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<vxml version = "2.1" >  
-  <menu id="menu1" dtmf="true">
-   <prompt>Questions concerning rainfall select 1, weather conditions select 2, harvesting select 3, other topic select 4</prompt>
-   <choice next="#form1"/>
-   <choice next="#form2"/>
-   <choice next="#form3"/>
-   <choice next="#form4"/>
-  </menu>
-	
-	 <form id="form1">
-  <block>
-   <prompt>
-    You chose rainfall
-   </prompt>
-	<goto next="http://webhosting.voxeo.net/198098/www/QuestionRecord.xml"/>
-  </block>
- </form>
- 
-  <form id="form2">
-  <block>
-   <prompt>
-    You chose weather
-	<goto next="http://webhosting.voxeo.net/198098/www/QuestionRecord.xml"/>
-   </prompt>
-  </block>
- </form>
- 
-  <form id="form3">
-  <block>
-   <prompt>
-    You chose harvesting
-	<goto next="http://webhosting.voxeo.net/198098/www/QuestionRecord.xml"/>
-   </prompt>
-  </block>
- </form>
-	
-  <form id="form4">
-  <block>
-   <prompt>
-    You chose other
-	<goto next="http://webhosting.voxeo.net/198098/www/QuestionRecord.xml"/>
-   </prompt>
-  </block>
- </form>
- 
+<vxml version = "2.1" >
+<property name="inputmodes" value="dtmf" /> 
+<!-- Kasadaka Vxml File Layout -->
+
+
+<form  id="menu">
+<field name="question1">
+<prompt>
+<audio src="openingfrase.wav"/>
+<audio src="firstchoice.wav"/>
+<audio src="extendedfirstchoice.wav"/>
+</prompt>
+
+
+<grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
+      <rule id="MYRULE" scope = "public">
+        <one-of>
+          
+            <item>1</item>
+          
+            <item>2</item>
+          
+            <item>3</item>
+          
+        </one-of>
+       </rule>
+     </grammar>
+
+
+<filled>
+    
+      
+      <if cond="question1 == '1'">
+		<prompt>
+		<audio src="questionchoice.wav"/>
+		</prompt>
+      <goto next="main.vxml?lang=en"/>
+      
+    
+      
+      <elseif cond="question1 == '2'" />
+		<prompt>
+		<audio src="answerchoice.wav"/>
+		</prompt>
+      <goto next="main.vxml?lang=fr"/>
+      
+    
+      
+      <elseif cond="question1 == '3'" />
+		<prompt>
+		<audio src="listenchoice.wav"/>
+		</prompt>
+      <goto next="main.vxml?lang=nl"/>
+      
+    
+
+
+    <else/>
+    </if>
+  </filled>
+
+</field>
+</form>
+
+
+
+
+
+
 </vxml>
