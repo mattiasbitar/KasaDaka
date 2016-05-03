@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<vxml version="2.1">
-<property name="inputmodes" value="dtmf" /> 
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml">
  
 <form id="F1">
 <record name="R_1" beep="true" dtmfterm="true">
