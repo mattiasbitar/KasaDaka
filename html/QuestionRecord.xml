@@ -4,11 +4,10 @@
 <form id="F1">
 <record name="R_1" beep="true" dtmfterm="true">
 <prompt>
-Ask you're question after the beep.
+<audio src="questionbeep.wav"/>
 </prompt>
 <prompt>
-When you are finished with the question, you may press any key to indicate that you are
-done.
+<audio src="anykey.wav"/>
 </prompt>
  
 <filled>
@@ -17,10 +16,11 @@ done.
 <log expr="R_1$.size" />
  
 <prompt>
-Your question was <value expr="R_1" />
+<audio src="yourquestionwas.wav"/>
+<value expr="R_1" />
 </prompt>
-<prom>
-Thank you for sending us your question. Goodbye.
+<promt>
+<audio src="questiongoodbye.wav"/>
 </promt>
 </filled>
 </record>
