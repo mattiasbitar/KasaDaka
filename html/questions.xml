@@ -7,9 +7,7 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="openingfrase.wav"/>
-<audio src="firstchoice.wav"/>
-<audio src="extendedfirstchoice.wav"/>
+<audio src="questionmenu.wav"/>
 </prompt>
 
 
@@ -22,6 +20,8 @@
             <item>2</item>
           
             <item>3</item>
+			
+			<item>4</item>
           
         </one-of>
        </rule>
@@ -33,7 +33,7 @@
       
       <if cond="question1 == '1'">
 		<prompt>
-		<audio src="questionchoice.wav"/>
+		<audio src="rainfallchoice.wav"/>
 		</prompt>
       <goto next="main.vxml?lang=en"/>
       
@@ -41,7 +41,7 @@
       
       <elseif cond="question1 == '2'" />
 		<prompt>
-		<audio src="answerchoice.wav"/>
+		<audio src="weatherforcastchoice.wav"/>
 		</prompt>
       <goto next="main.vxml?lang=fr"/>
       
@@ -49,12 +49,18 @@
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="listenchoice.wav"/>
+		<audio src="harvestingcastchoice.wav"/>
+		</prompt>
+      <goto next="main.vxml?lang=nl"/>
+	  
+	  
+	   <elseif cond="question1 == '4'" />
+		<prompt>
+		<audio src="otherschoice.wav"/>
 		</prompt>
       <goto next="main.vxml?lang=nl"/>
       
     
-
 
     <else/>
     </if>
