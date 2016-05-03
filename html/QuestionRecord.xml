@@ -15,7 +15,7 @@
     </nomatch>
     <record name="record" dtmfterm="false" maxtime="120s" type="audio/x-wav" beep="true">
       <prompt bargein="false">
-        <audio src="audio/greeting.wav"/>
+        <audio src="questionbeep.wav"/>
       </prompt>
     </record>
     <block>
