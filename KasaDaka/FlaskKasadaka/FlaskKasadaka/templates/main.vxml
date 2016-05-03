@@ -1,0 +1,18 @@
+{% extends "menu.vxml" %}
+{#
+The same as a regular menu, but with a message before the menu.
+#}
+
+{% block optionalMessage %}
+<form id="welcome">
+<block>
+<prompt>
+<audio src="{{ interfaceAudioDir ~ welcomeAudio }}"/>
+</prompt>
+<goto next="#menu"/>
+</block>
+</form>
+
+
+
+{% endblock %}

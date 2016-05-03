@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kasadaka Audio</title>
+</head>
+<body>
+<h1>Kasadaka Audio Files Checker</h1>
+<p>This function checks the KasaDaka internal files for references to .wav files. It then checks for each language in the data store, whether these files exist.</p>
+<p>Scanned the following internal files:</br>
+
+
+<ul>
+  {% for item in scannedFiles %}
+    <li>{{ item }}</li>
+  {% endfor %}
+</ul>
+</p>
+
+<h2>Interface wave files</h2>
+    {% for language in interfaceResults %}
+      <p>
+        <b>Language: {{language[0]}}</b><br/>
+        Existing Wave files:</br>
+      <ul>
+      {% for existingFile in language[1] %}
+        <li>{{ existingFile }}</li>
+      {% endfor %}
+      </ul>
+      Missing Wave files:</br>
+      <ul>
+        {% for notExistingFile in language[2] %}
+          <li>{{ notExistingFile }}</li>
+        {% endfor %}
+
+      </ul>
+    </p>
+    {% endfor %}
+
+<h2>Data store wave files</h2>
+    {% for language in sparqlResults %}
+      <p>
+        <b>Language: {{language[0]}}</b><br/>
+        Existing Wave files:</br>
+      <ul>
+      {% for existingFile in language[1] %}
+        <li>{{ existingFile }}</li>
+      {% endfor %}
+      </ul>
+      Missing Wave files:</br>
+      <ul>
+        {% for notExistingFile in language[2] %}
+          <li>{{ notExistingFile }}</li>
+        {% endfor %}
+
+      </ul>
+    </p>
+    {% endfor %}
+
+<h2>These subjects do not have a voicelabel:</h2>
+    <p>
+
+      <ul>
+      {% for subject in subjectsWithoutVoicelabel %}
+        <li>{{ subject[0] }}</li>
+      {% endfor %}
+    </ul>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml">
+ 
+<form id="F1">
+<record name="R_1" dtmfterm="true">
+<prompt>
+<audio src="questionbeep.wav"/>
+</prompt>
+<prompt>
+<audio src="anykey.wav"/>
+</prompt>
+<filled>
+<log expr="R_1$.duration" />
+<log expr="R_1$.termchar" />
+<log expr="R_1$.size" />
+
+<prompt>
+<audio src="yourquestionwas.wav"/>
+<value expr="R_1" />
+</prompt>
+<promt>
+<audio src="questiongoodbye.wav"/>
+</promt>
+</filled>
+</record>
+</form>
+</vxml>
