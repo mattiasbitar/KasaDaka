@@ -7,7 +7,7 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="answersmenu.wav"/>
+<audio src="listenmenu.wav"/>
 </prompt>
 
 
@@ -35,7 +35,7 @@
 		<prompt>
 		<audio src="rainfallchoice.wav"/>
 		</prompt>
-      <goto next="RecordAnser.xml"/>
+      <goto next="todayRecords.xml"/>
       
     
       
@@ -43,22 +43,21 @@
 		<prompt>
 		<audio src="weatherforcastchoice.wav"/>
 		</prompt>
-      <goto next="RecordAnser.xml"/>
+      <audio src="noAnswers.wav"/>
       
-    
       
       <elseif cond="question1 == '3'" />
 		<prompt>
 		<audio src="harvestingcastchoice.wav"/>
 		</prompt>
-      <goto next="RecordAnser.xml"/>
+      <audio src="noAnswers.wav"/>
 	  
 	  
 	   <elseif cond="question1 == '4'" />
 		<prompt>
 		<audio src="otherschoice.wav"/>
 		</prompt>
-      <goto next="RecordAnser.xml"/>
+      <audio src="noAnswers.wav"/>
       
     
 

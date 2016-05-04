@@ -43,7 +43,7 @@
 		<prompt>
 		<audio src="weatherforcastchoice.wav"/>
 		</prompt>
-      <goto next="main.vxml?lang=fr"/>
+      <goto next="QuestionRecord.xml"/>
       
     
       
@@ -51,14 +51,14 @@
 		<prompt>
 		<audio src="harvestingcastchoice.wav"/>
 		</prompt>
-      <goto next="main.vxml?lang=nl"/>
+      <goto next="QuestionRecord.xml"/>
 	  
 	  
 	   <elseif cond="question1 == '4'" />
 		<prompt>
 		<audio src="otherschoice.wav"/>
 		</prompt>
-      <goto next="main.vxml?lang=nl"/>
+      <goto next="QuestionRecord.xml"/>
       
     
 

@@ -9,7 +9,7 @@
  </record>
  <field name="confirm">
    <prompt>
- <audio src="questiongoodbye"/>
+ <audio src="questiongoodbye.wav"/>
    </prompt>
  
  <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">

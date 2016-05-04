@@ -43,7 +43,7 @@
 		<prompt>
 		<audio src="answerchoice.wav"/>
 		</prompt>
-      <goto next="main.vxml?lang=fr"/>
+      <goto next="answers.xml"/>
       
     
       
@@ -51,7 +51,7 @@
 		<prompt>
 		<audio src="listenchoice.wav"/>
 		</prompt>
-      <goto next="main.vxml?lang=nl"/>
+      <goto next="listen.xml"/>
       
     
 
