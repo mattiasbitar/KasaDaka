@@ -7,7 +7,10 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="chooseLanguage.wav"/>
+<audio src="EnglishRadioQuestionAnswer.wav"/>
+<audio src="FrenchRadioQuestionAnswer.wav"/>
+<audio src="Select1English.wav"/>
+<audio src="Select2French.wav"/>
 </prompt>
 
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
