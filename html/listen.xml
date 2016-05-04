@@ -35,7 +35,7 @@
 		<prompt>
 		<audio src="rainfallchoice.wav"/>
 		</prompt>
-      <goto next="todayRecords.xml"/>
+      <goto next="ListenRecord.xml"/>
       
     
       
