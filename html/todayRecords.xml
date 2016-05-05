@@ -3,7 +3,12 @@
 <form id="todayRecords">
 <block>
 <prompt>
+<audio src="FRrainfallRecord1.wav"/>
+</prompt>
+<prompt>
 <audio src="noMoreRecords.wav"/>
 </prompt>
 </block>
 </form>
+
+</vxml>
