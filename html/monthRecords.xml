@@ -4,6 +4,7 @@
 <block>
 <prompt>
 <audio src="rainfallRecord1.wav"/>
+<audio src="rainfallRecord2.wav"/>
 </prompt>
 <prompt>
 <audio src="noMoreRecords.wav"/>

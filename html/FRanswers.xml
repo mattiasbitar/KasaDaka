@@ -3,11 +3,14 @@
 <property name="inputmodes" value="dtmf" /> 
 <!-- Kasadaka Vxml File Layout -->
 
+
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="listenRecordsMenu.wav"/>
+<audio src="FRanswersmenu1.wav"/>
+<audio src="FRanswersmenu2.wav"/>
 </prompt>
+
 
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
       <rule id="MYRULE" scope = "public">
@@ -18,6 +21,8 @@
             <item>2</item>
           
             <item>3</item>
+			
+			<item>4</item>
           
         </one-of>
        </rule>
@@ -29,23 +34,32 @@
       
       <if cond="question1 == '1'">
 		<prompt>
-		<audio src="todaysRecords.wav"/>
+		<audio src="FRrainfallchoice.wav"/>
 		</prompt>
-      <goto next="todayRecords.xml"/>
+      <goto next="FRRecordAnser.xml"/>
+      
     
       
       <elseif cond="question1 == '2'" />
 		<prompt>
-		<audio src="weekRecords.wav"/>
+		<audio src="FRweatherforcastchoice.wav"/>
 		</prompt>
-      <goto next="weekRecords.xml"/>
+      <goto next="FRRecordAnser.xml"/>
+      
     
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="montRecords.wav"/>
+		<audio src="FRharvestingcastchoice.wav"/>
 		</prompt>
-      <goto next="monthRecords.xml"/>
+      <goto next="FRRecordAnser.xml"/>
+	  
+	  
+	   <elseif cond="question1 == '4'" />
+		<prompt>
+		<audio src="FRotherschoice.wav"/>
+		</prompt>
+      <goto next="FRRecordAnser.xml"/>
       
     
 

@@ -3,11 +3,15 @@
 <property name="inputmodes" value="dtmf" /> 
 <!-- Kasadaka Vxml File Layout -->
 
+
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="listenRecordsMenu.wav"/>
+<audio src="FRopeningfrase.wav"/>
+<audio src="FRfirstchoice.wav"/>
+<audio src="FRextendedfirstchoice.wav"/>
 </prompt>
+
 
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
       <rule id="MYRULE" scope = "public">
@@ -29,25 +33,28 @@
       
       <if cond="question1 == '1'">
 		<prompt>
-		<audio src="todaysRecords.wav"/>
+		<audio src="FRquestionchoice.wav"/>
 		</prompt>
-      <goto next="todayRecords.xml"/>
+      <goto next="FRquestions.xml"/>
+      
     
       
       <elseif cond="question1 == '2'" />
 		<prompt>
-		<audio src="weekRecords.wav"/>
+		<audio src="FRanswerchoice.wav"/>
 		</prompt>
-      <goto next="weekRecords.xml"/>
+      <goto next="FRanswers.xml"/>
+      
     
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="montRecords.wav"/>
+		<audio src="FRlistenchoice.wav"/>
 		</prompt>
-      <goto next="monthRecords.xml"/>
+      <goto next="FRlisten.xml"/>
       
     
+
 
     <else/>
     </if>

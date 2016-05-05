@@ -3,10 +3,10 @@
 <form id="todayRecords">
 <block>
 <prompt>
-<audio src="rainfallRecord1.wav"/>
+<audio src="FRrainfallRecord1.wav"/>
 </prompt>
 <prompt>
-<audio src="noMoreRecords.wav"/>
+<audio src="FRnoMoreRecords.wav"/>
 </prompt>
 </block>
 </form>

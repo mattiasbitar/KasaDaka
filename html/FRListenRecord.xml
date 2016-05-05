@@ -6,7 +6,8 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="listenRecordsMenu.wav"/>
+<audio src="FRlistenRecordsMenu1.wav"/>
+<audio src="FRlistenRecordsMenu2.wav"/>
 </prompt>
 
 <grammar xml:lang="en-US" root = "MYRULE" mode="dtmf">
@@ -29,23 +30,23 @@
       
       <if cond="question1 == '1'">
 		<prompt>
-		<audio src="todaysRecords.wav"/>
+		<audio src="FRtodaysRecords.wav"/>
 		</prompt>
-      <goto next="todayRecords.xml"/>
+      <goto next="FRtodayRecords.xml"/>
     
       
       <elseif cond="question1 == '2'" />
 		<prompt>
-		<audio src="weekRecords.wav"/>
+		<audio src="FRweekRecords.wav"/>
 		</prompt>
-      <goto next="weekRecords.xml"/>
+      <goto next="FRweekRecords.xml"/>
     
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="montRecords.wav"/>
+		<audio src="FRmontRecords.wav"/>
 		</prompt>
-      <goto next="monthRecords.xml"/>
+      <goto next="FRmonthRecords.xml"/>
       
     
 
