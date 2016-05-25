@@ -10,6 +10,7 @@
 <audio src="FRopeningfrase.wav"/>
 <audio src="FRfirstchoice.wav"/>
 <audio src="FRextendedfirstchoice.wav"/>
+<audio src="FR2extendedfirstchoice.wav"/>
 </prompt>
 
 
@@ -22,6 +23,8 @@
             <item>2</item>
           
             <item>3</item>
+			
+			<item>4</item>
           
         </one-of>
        </rule>
@@ -54,7 +57,11 @@
       <goto next="FRlisten.xml"/>
       
     
-
+      <elseif cond="question1 == '4'" />
+		<prompt>
+		<audio src="FRprovideinfo.wav"/>
+		</prompt>
+      <goto next="FRprovideinfo.xml"/>
 
     <else/>
     </if>
