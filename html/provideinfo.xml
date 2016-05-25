@@ -7,10 +7,7 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="openingfrase.wav"/>
-<audio src="firstchoice.wav"/>
-<audio src="extendedfirstchoice.wav"/>
-<audio src="2extendedfirstchoice.wav"/>
+<audio src="proivdeinfomenu.wav"/>
 </prompt>
 
 
@@ -36,35 +33,34 @@
       
       <if cond="question1 == '1'">
 		<prompt>
-		<audio src="questionchoice.wav"/>
+		<audio src="rainfallchoice.wav"/>
 		</prompt>
-      <goto next="questions.xml"/>
+      <goto next="RecordAnser.xml"/>
       
     
       
       <elseif cond="question1 == '2'" />
 		<prompt>
-		<audio src="answerchoice.wav"/>
+		<audio src="weatherforcastchoice.wav"/>
 		</prompt>
-      <goto next="answers.xml"/>
+      <goto next="RecordAnser.xml"/>
       
     
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="listenchoice.wav"/>
+		<audio src="harvestingcastchoice.wav"/>
 		</prompt>
-      <goto next="listen.xml"/>
+      <goto next="RecordAnser.xml"/>
 	  
 	  
 	   <elseif cond="question1 == '4'" />
 		<prompt>
-		<audio src="provideinfo.wav"/>
+		<audio src="otherschoice.wav"/>
 		</prompt>
-      <goto next="provideinfo.xml"/>
+      <goto next="RecordAnser.xml"/>
       
     
-
 
     <else/>
     </if>
