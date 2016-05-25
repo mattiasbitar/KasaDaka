@@ -7,8 +7,9 @@
 <form  id="menu">
 <field name="question1">
 <prompt>
-<audio src="FRproivdeinfomenu1.wav"/>
-<audio src="FRproivdeinfomenu2.wav"/>
+<audio src="FRprovideinfomenu.wav"/>
+<audio src="FRanswermenu1.wav"/>
+<audio src="FRanswermenu2.wav"/>
 </prompt>
 
 
