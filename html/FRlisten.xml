@@ -9,6 +9,7 @@
 <prompt>
 <audio src="FRlistenmenu1.wav"/>
 <audio src="FRlistenmenu2.wav"/>
+<audio src="FRmenuextension.wav"/>
 </prompt>
 
 
@@ -23,6 +24,10 @@
             <item>3</item>
 			
 			<item>4</item>
+
+            <item>5</item>
+			
+			<item>6</item>
           
         </one-of>
        </rule>
@@ -49,7 +54,7 @@
       
       <elseif cond="question1 == '3'" />
 		<prompt>
-		<audio src="harvestingcastchoice.wav"/>
+		<audio src="FRharvestingcastchoice.wav"/>
 		</prompt>
       <audio src="FRnoAnswers.wav"/>
 	  
@@ -57,6 +62,20 @@
 	   <elseif cond="question1 == '4'" />
 		<prompt>
 		<audio src="FRotherschoice.wav"/>
+		</prompt>
+      <audio src="FRnoAnswers.wav"/>
+	  
+      
+      <elseif cond="question1 == '5'" />
+		<prompt>
+		<audio src="FRseedplantchoice.wav"/>
+		</prompt>
+      <audio src="FRnoAnswers.wav"/>
+	  
+	  
+	   <elseif cond="question1 == '6'" />
+		<prompt>
+		<audio src="FRanimalhealthchoice.wav"/>
 		</prompt>
       <audio src="FRnoAnswers.wav"/>
       

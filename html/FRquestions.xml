@@ -9,6 +9,7 @@
 <prompt>
 <audio src="FRquestionsmenu1.wav"/>
 <audio src="FRquestionsmenu2.wav"/>
+<audio src="FRmenuextension.wav"/>
 </prompt>
 
 
@@ -23,6 +24,10 @@
             <item>3</item>
 			
 			<item>4</item>
+
+            <item>5</item>
+			
+			<item>6</item>
           
         </one-of>
        </rule>
@@ -60,6 +65,20 @@
 		<audio src="FRotherschoice.wav"/>
 		</prompt>
       <goto next="FRQuestionRecord.xml"/>
+	  
+      <elseif cond="question1 == '5'" />
+		<prompt>
+		<audio src="FRseedplantchoice.wav"/>
+		</prompt>
+      <goto next="FRQuestionRecord.xml"/>
+	  
+	  
+	   <elseif cond="question1 == '6'" />
+		<prompt>
+		<audio src="FRanimalhealthchoice.wav"/>
+		</prompt>
+      <goto next="FRQuestionRecord.xml"/>
+      
       
     
 
