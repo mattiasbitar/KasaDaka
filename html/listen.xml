@@ -22,6 +22,10 @@
             <item>3</item>
 			
 			<item>4</item>
+			
+            <item>5</item>
+			
+			<item>6</item>		
           
         </one-of>
        </rule>
@@ -36,7 +40,6 @@
 		<audio src="rainfallchoice.wav"/>
 		</prompt>
       <goto next="ListenRecord.xml"/>
-      
     
       
       <elseif cond="question1 == '2'" />
@@ -54,6 +57,19 @@
 	  
 	  
 	   <elseif cond="question1 == '4'" />
+		<prompt>
+		<audio src="seedplantingchoice.wav"/>
+		</prompt>
+      <audio src="noAnswers.wav"/>
+      
+      <elseif cond="question1 == '5'" />
+		<prompt>
+		<audio src="animalhealthchoice.wav"/>
+		</prompt>
+      <audio src="noAnswers.wav"/>
+	  
+	  
+	   <elseif cond="question1 == '6'" />
 		<prompt>
 		<audio src="otherschoice.wav"/>
 		</prompt>
